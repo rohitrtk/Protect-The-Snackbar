@@ -11,7 +11,11 @@ public class Player_Control : MonoBehaviour
     [SerializeField] private Vector3 _cameraOffset;     // Cameras offset
 
     private Player_Movement _playerMovement;            // Player movement object
+    private bool _paused;
 
+    /// <summary>
+    /// Referance of the Player gameObject
+    /// </summary>
     public GameObject Instance;
 
     /// <summary>
@@ -20,9 +24,12 @@ public class Player_Control : MonoBehaviour
     private void Start ()
     {
         _mainCamera = Camera.main;
-
+        _paused = false;
         _playerMovement = GetComponent<Player_Movement>();
-	}
+
+        //Lock the player's cursor to the middle of the screen
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     /// <summary>
     /// Update is called once per frame
@@ -30,14 +37,34 @@ public class Player_Control : MonoBehaviour
     private void Update ()
     {
         MovePlayerCamera();
-	}
+
+        //If the user hits escape, give them their cursor back
+        if (Input.GetKeyDown("escape")) { _paused = !_paused; } //TODO Later this line should be moved to wherever we are going to handel all the other getKey actions
+
+
+        if (_paused)
+        {
+            Debug.Log("Unlocked cursor");
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            //Weird, you have to click for the lock to lock back to the game again. //TODO <<< fix this <<<
+            //Debug.Log("Locked cursor");
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
 
     /// <summary>
     /// Handles the moving of the players camera
     /// </summary>
     private void MovePlayerCamera()
     {
-        _mainCamera.transform.position = transform.position;
-        _mainCamera.transform.Translate(_cameraOffset);
+        //Move camera to player
+        _mainCamera.transform.position = transform.position + _cameraOffset;
+        //_mainCamera.transform.Translate(_cameraOffset);
+
+        //Rotate player camera
     }
 }

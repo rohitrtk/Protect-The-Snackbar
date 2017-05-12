@@ -7,7 +7,7 @@ public class Player_Movement : Player_Movement_Abstract
 {
     protected override void Start()
     {
-        
+
     }
 
     protected override void Update()
@@ -15,11 +15,14 @@ public class Player_Movement : Player_Movement_Abstract
         Move();
     }
 
+    /// <summary>
+    /// Handels the movement of the player
+    /// </summary>
     protected override void Move()
     {
-        var verticalMove = Input.GetAxis("Vertical");
-        var horizontalMove = Input.GetAxis("Horizontal");
+        var verticalMove = Input.GetAxis("Vertical") * MoveSpeed;
+        var horizontalMove = Input.GetAxis("Horizontal") * MoveSpeed;
 
-        transform.position = new Vector3(verticalMove, 0f, horizontalMove);
+        transform.Translate(horizontalMove, 0f, verticalMove);
     }
 }
