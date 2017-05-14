@@ -3,14 +3,14 @@
 /// <summary>
 /// Abstract class for weapons
 /// </summary>
-public abstract class Weapon_Abstract : MonoBehaviour
+public abstract partial class Weapon_Abstract : MonoBehaviour
 {
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
     #endregion
 
-    #region Methods
+    #region Getters and Setters
     protected int NumberOfBullets
     {
         get
@@ -45,11 +45,25 @@ public abstract class Weapon_Abstract : MonoBehaviour
             hasScope = value;
         }
     }
+
+    public int NumberOfBulletsInGun
+    {
+        get
+        {
+            return numberOfBulletsInGun;
+        }
+
+        set
+        {
+            numberOfBulletsInGun = value;
+        }
+    }
     #endregion
 
     #region Variables
-    private int numberOfBullets;
-    private float reloadTime;
-    private bool hasScope;
+    [SerializeField] private int numberOfBullets;
+    [SerializeField] private int numberOfBulletsInGun;
+    [SerializeField] private float reloadTime;
+    [SerializeField] private bool hasScope;
     #endregion
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Handles player movement
 /// </summary>
-public class Player_Movement : Player_Movement_Abstract
+public partial class Player_Movement : Player_Movement_Abstract
 {
     /// <summary>
     /// Called on object initialization
@@ -38,13 +38,8 @@ public class Player_Movement : Player_Movement_Abstract
     /// <summary>
     /// Handles the rotation of the player
     /// </summary>
+    [System.Obsolete]
     protected override void Rotate()
     {
-        //var horizontalRot = Input.GetAxis("Mouse X") * 100f;
-        //var verticalRot = Input.GetAxis("Mouse Y") * 100f;
-
-        //transform.Rotate(new Vector3(-verticalRot, horizontalRot, 0f) * Time.deltaTime);
-
-        //transform.eulerAngles = new Vector3(horizontalRot, verticalRot, 0f);
     }
 }

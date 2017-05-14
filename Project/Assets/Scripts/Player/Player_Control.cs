@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Handles setting up the player and holds reference to other scripts the player uses.
 /// </summary>
-public class Player_Control : MonoBehaviour
+public partial class Player_Control : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;            // Players camera
     [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
@@ -13,10 +13,11 @@ public class Player_Control : MonoBehaviour
     private Player_Movement _playerMovement;                // Player movement object
     private bool _paused;
 
-    private Transform _playerWeapons;                      // PlayerWeapons gameobject (Holds reference to the attached weapons)
+    private Transform _playerWeapons;                       // PlayerWeapons gameobject (Holds reference to the attached weapons)
 
     /// <summary>
     /// Referance of the Player gameObject
+    /// Will be deleted
     /// </summary>
     public GameObject Instance;
 
@@ -55,8 +56,8 @@ public class Player_Control : MonoBehaviour
         _mainCamera.transform.Translate(_cameraOffset);
 
         // Sets the players camera rotation to the rotation of the player
-        var xRot = Input.GetAxis("Mouse X") * 50f;
-        var yRot = Input.GetAxis("Mouse Y") * -50f;
+        var xRot = Input.GetAxis("Mouse X") * 60f;
+        var yRot = Input.GetAxis("Mouse Y") * -60f;
 
         // Fixes camera tilt 
         transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
@@ -66,11 +67,11 @@ public class Player_Control : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks for player key presses
+    /// Checks for player key presses that aren't related to movement
     /// </summary>
     private void CheckKeys()
     {
         //If the user hits escape, give them their cursor back
-        if (Input.GetKeyDown("escape")) { _paused = !_paused; } //TODO Later this line should be moved to wherever we are going to handel all the other getKey actions
+        if (Input.GetKeyDown("escape")) _paused = !_paused;
     }
 }
