@@ -7,10 +7,10 @@ using UnityEngine;
 /// </summary>
 public class Player_Control : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera;        // Players camera
-    [SerializeField] private Vector3 _cameraOffset;     // Cameras offset
+    [SerializeField] private Camera _mainCamera;            // Players camera
+    [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
 
-    private Player_Movement _playerMovement;            // Player movement object
+    private Player_Movement _playerMovement;                // Player movement object
     private bool _paused;
 
     /// <summary>
@@ -27,7 +27,7 @@ public class Player_Control : MonoBehaviour
         _paused = false;
         _playerMovement = GetComponent<Player_Movement>();
 
-        //Lock the player's cursor to the middle of the screen
+        // Lock the player's cursor to the middle of the screen
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -57,14 +57,16 @@ public class Player_Control : MonoBehaviour
 
 
     /// <summary>
-    /// Handles the moving of the players camera
+    /// Handles the moving and rotation of the players camera
     /// </summary>
     private void MovePlayerCamera()
     {
         //Move camera to player
-        _mainCamera.transform.position = transform.position + _cameraOffset;
-        //_mainCamera.transform.Translate(_cameraOffset);
+        //_mainCamera.transform.position = transform.position + _cameraOffset;
+        _mainCamera.transform.position = transform.position;                    // This looks cooler
+        _mainCamera.transform.Translate(_cameraOffset);
 
-        //Rotate player camera
+        // Sets the players camera rotation to the rotation of the player
+        _mainCamera.transform.rotation = transform.rotation;
     }
 }

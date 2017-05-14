@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+/// <summary>
+/// Temporary GameManager (base NetworkManager off of this class)
+/// </summary>
+public class GameManager : MonoBehaviour
+{
 
     /// <summary>
     /// Where the player spawns, connected to empty object
@@ -17,7 +21,8 @@ public class GameManager : MonoBehaviour {
     public Player_Control Instance;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         //Spawn a player
         Instance = PlayerPrefab.GetComponent<Player_Control>();
         Instance.Instance = Instantiate(PlayerPrefab, Spawn.position, Spawn.rotation) as GameObject;
@@ -28,7 +33,8 @@ public class GameManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 
         
 

@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class for player movement
+/// </summary>
 public abstract class Player_Movement_Abstract : MonoBehaviour
 {
 
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
-    protected abstract void Move(); //Handels the movement of the player
+    protected abstract void Move();         // Handles the movement of the player
+    protected abstract void Rotate();       // Handles rotating the player based on mouse input
     #endregion
 
     #region Variables
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] protected float _moveSpeed;
+    [HideInInspector] protected const float _moveSpeedScale = 0.15f;
 
     /// <summary>
     /// Multiplier for the speed of the player
@@ -23,7 +28,6 @@ public abstract class Player_Movement_Abstract : MonoBehaviour
         {
             return _moveSpeed;
         }
-
         set
         {
             _moveSpeed = value;
