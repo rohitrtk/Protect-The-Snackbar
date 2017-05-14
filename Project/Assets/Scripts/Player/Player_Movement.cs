@@ -40,10 +40,10 @@ public class Player_Movement : Player_Movement_Abstract
     /// </summary>
     protected override void Rotate()
     {
-        var horizontalRot = Input.GetAxis("Mouse X") * 100f;
-        var verticalRot = Input.GetAxis("Mouse Y") * 100f;
+        //var horizontalRot = Input.GetAxis("Mouse X") * 100f;
+        //var verticalRot = Input.GetAxis("Mouse Y") * 100f;
 
-        transform.Rotate(new Vector3(-verticalRot, horizontalRot, 0f) * Time.deltaTime);
+        //transform.Rotate(new Vector3(-verticalRot, horizontalRot, 0f) * Time.deltaTime);
 
         //transform.eulerAngles = new Vector3(horizontalRot, verticalRot, 0f);
     }

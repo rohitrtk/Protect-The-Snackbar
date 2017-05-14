@@ -13,6 +13,8 @@ public class Player_Control : MonoBehaviour
     private Player_Movement _playerMovement;                // Player movement object
     private bool _paused;
 
+    private Transform _playerWeapons;                      // PlayerWeapons gameobject (Holds reference to the attached weapons)
+
     /// <summary>
     /// Referance of the Player gameObject
     /// </summary>
@@ -27,6 +29,8 @@ public class Player_Control : MonoBehaviour
         _paused = false;
         _playerMovement = GetComponent<Player_Movement>();
 
+        _playerWeapons = transform.Find("PlayerWeapons");
+
         // Lock the player's cursor to the middle of the screen
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -36,37 +40,37 @@ public class Player_Control : MonoBehaviour
     /// </summary>
     private void Update ()
     {
+        CheckKeys();
         MovePlayerCamera();
-
-        //If the user hits escape, give them their cursor back
-        if (Input.GetKeyDown("escape")) { _paused = !_paused; } //TODO Later this line should be moved to wherever we are going to handel all the other getKey actions
-
-
-        if (_paused)
-        {
-            Debug.Log("Unlocked cursor");
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            //Weird, you have to click for the lock to lock back to the game again. //TODO <<< fix this <<<
-            //Debug.Log("Locked cursor");
-            Cursor.lockState = CursorLockMode.Locked;
-        }
     }
-
 
     /// <summary>
     /// Handles the moving and rotation of the players camera
     /// </summary>
     private void MovePlayerCamera()
     {
-        //Move camera to player
+        // Move camera to player
         //_mainCamera.transform.position = transform.position + _cameraOffset;
         _mainCamera.transform.position = transform.position;                    // This looks cooler
         _mainCamera.transform.Translate(_cameraOffset);
 
         // Sets the players camera rotation to the rotation of the player
+        var xRot = Input.GetAxis("Mouse X") * 50f;
+        var yRot = Input.GetAxis("Mouse Y") * -50f;
+
+        // Fixes camera tilt 
+        transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
+        transform.Rotate(yRot * Vector3.right * Time.deltaTime);
+
         _mainCamera.transform.rotation = transform.rotation;
+    }
+
+    /// <summary>
+    /// Checks for player key presses
+    /// </summary>
+    private void CheckKeys()
+    {
+        //If the user hits escape, give them their cursor back
+        if (Input.GetKeyDown("escape")) { _paused = !_paused; } //TODO Later this line should be moved to wherever we are going to handel all the other getKey actions
     }
 }
