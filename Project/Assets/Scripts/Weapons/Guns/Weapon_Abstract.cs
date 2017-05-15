@@ -8,7 +8,18 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
-    public abstract void Fire();
+    #endregion
+
+    #region Methods
+    public virtual void Fire()
+    {
+        RaycastHit hitInfo;
+            Debug.DrawRay(BulletSpawn.position, BulletSpawn.forward, Color.red);
+        if(Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 100f))
+        {
+            print(hitInfo.transform.name);
+        }
+    }
     #endregion
 
     #region Getters and Setters
@@ -78,14 +89,6 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
             return _bulletSpawn;
         }
     }
-    protected Bullet_Basic BulletInstance
-    {
-        get
-        {
-            return _bulletInstance;
-        }
-    }
-
 
     #endregion
 
@@ -96,6 +99,5 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private float waitTime;
     [SerializeField] private bool hasScope;
     [SerializeField] private Transform _bulletSpawn;
-    [SerializeField] private Bullet_Basic _bulletInstance;
     #endregion
 }

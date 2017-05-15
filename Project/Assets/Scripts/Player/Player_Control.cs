@@ -75,7 +75,8 @@ public partial class Player_Control : MonoBehaviour
 
         // TODO: make this more efficient
         // Also need to make a bool for primary weapon
-        if(Input.GetMouseButton(0))
+        //if(Input.GetMouseButton(0))
+        if(Input.GetButtonDown("Fire1"))
         {
             Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
             gun.Fire();

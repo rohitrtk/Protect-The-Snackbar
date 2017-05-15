@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public partial class Bullet_Basic : Bullet_Abstract
 {
     /// <summary>

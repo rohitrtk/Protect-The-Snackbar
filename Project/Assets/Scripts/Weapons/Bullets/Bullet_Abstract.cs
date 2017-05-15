@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Obsolete]
 public abstract partial class Bullet_Abstract : MonoBehaviour
 {
     #region Abstract Methods

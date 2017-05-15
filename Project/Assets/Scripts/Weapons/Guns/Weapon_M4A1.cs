@@ -27,13 +27,6 @@ public class Weapon_M4A1 : Weapon_Abstract
 
     public override void Fire()
     {
-        if (shoot) return;
-        shoot = true;
-
-        // If we decide to use bullets
-        //Bullet_Basic bulletInstance = Instantiate(BulletInstance, BulletSpawn.position, BulletSpawn.rotation) 
-        //    as Bullet_Basic;
-
-        // If we decide to use ray casts
+        base.Fire();
     }
 }
