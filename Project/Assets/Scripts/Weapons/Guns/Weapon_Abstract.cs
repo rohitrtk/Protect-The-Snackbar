@@ -11,13 +11,25 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     #endregion
 
     #region Methods
+    /// <summary>
+    /// Called to cast a ray forward from the players BulletSpawn object
+    /// </summary>
     public virtual void Fire()
     {
         RaycastHit hitInfo;
-            Debug.DrawRay(BulletSpawn.position, BulletSpawn.forward, Color.red);
-        if(Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 100f))
+
+        Debug.DrawRay(BulletSpawn.position, BulletSpawn.forward, Color.red);
+
+        if (Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 5000f))
         {
+            var go = hitInfo.transform;
             print(hitInfo.transform.name);
+
+            if(go.tag.Equals("Enemy"))
+            {
+                Enemy_Abstract ec = go.GetComponent<Enemy_Abstract>();
+                ec.CalculateDamage(50);
+            }
         }
     }
     #endregion

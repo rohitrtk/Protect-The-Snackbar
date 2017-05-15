@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Handles setting up the player and holds reference to other scripts the player uses.
@@ -11,7 +9,7 @@ public partial class Player_Control : MonoBehaviour
     [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
 
     private Player_Movement _playerMovement;                // Player movement object
-    private bool _paused;
+    private bool _paused;                                   // Is this player paused?                    
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;                       
@@ -40,6 +38,8 @@ public partial class Player_Control : MonoBehaviour
     /// </summary>
     private void Update ()
     {
+        Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
+
         CheckKeysAndMouse();
         MovePlayerCamera();
     }
@@ -76,7 +76,7 @@ public partial class Player_Control : MonoBehaviour
         // TODO: make this more efficient
         // Also need to make a bool for primary weapon
         //if(Input.GetMouseButton(0))
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetButton("Fire1"))
         {
             Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
             gun.Fire();

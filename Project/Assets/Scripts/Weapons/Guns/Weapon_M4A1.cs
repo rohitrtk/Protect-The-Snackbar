@@ -9,12 +9,12 @@ using UnityEngine;
 public class Weapon_M4A1 : Weapon_Abstract
 {
     bool shoot = false;
+
     /// <summary>
     /// Use this for initialization
     /// </summary>
     protected override void Start()
     {
-        
     }
 
     /// <summary>
@@ -22,9 +22,11 @@ public class Weapon_M4A1 : Weapon_Abstract
     /// </summary>
     protected override void Update()
     {
-
     }
 
+    /// <summary>
+    /// Called to fire weapon; calls the super method
+    /// </summary>
     public override void Fire()
     {
         base.Fire();
