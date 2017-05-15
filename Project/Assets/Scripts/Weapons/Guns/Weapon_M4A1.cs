@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Weapon_M4A1 : Weapon_Abstract
 {
+    bool shoot = false;
     /// <summary>
     /// Use this for initialization
     /// </summary>
@@ -22,5 +23,17 @@ public class Weapon_M4A1 : Weapon_Abstract
     protected override void Update()
     {
 
+    }
+
+    public override void Fire()
+    {
+        if (shoot) return;
+        shoot = true;
+
+        // If we decide to use bullets
+        //Bullet_Basic bulletInstance = Instantiate(BulletInstance, BulletSpawn.position, BulletSpawn.rotation) 
+        //    as Bullet_Basic;
+
+        // If we decide to use ray casts
     }
 }

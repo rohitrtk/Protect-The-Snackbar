@@ -13,7 +13,8 @@ public partial class Player_Control : MonoBehaviour
     private Player_Movement _playerMovement;                // Player movement object
     private bool _paused;
 
-    private Transform _playerWeapons;                       // PlayerWeapons gameobject (Holds reference to the attached weapons)
+    // PlayerWeapons gameobject (Holds reference to the attached weapons)
+    [SerializeField] private Transform _playerWeapons;                       
 
     /// <summary>
     /// Referance of the Player gameObject
@@ -30,8 +31,6 @@ public partial class Player_Control : MonoBehaviour
         _paused = false;
         _playerMovement = GetComponent<Player_Movement>();
 
-        _playerWeapons = transform.Find("PlayerWeapons");
-
         // Lock the player's cursor to the middle of the screen
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -41,7 +40,7 @@ public partial class Player_Control : MonoBehaviour
     /// </summary>
     private void Update ()
     {
-        CheckKeys();
+        CheckKeysAndMouse();
         MovePlayerCamera();
     }
 
@@ -67,11 +66,19 @@ public partial class Player_Control : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks for player key presses that aren't related to movement
+    /// Checks for player key presses and mouse presses that aren't related to movement
     /// </summary>
-    private void CheckKeys()
+    private void CheckKeysAndMouse()
     {
         //If the user hits escape, give them their cursor back
         if (Input.GetKeyDown("escape")) _paused = !_paused;
+
+        // TODO: make this more efficient
+        // Also need to make a bool for primary weapon
+        if(Input.GetMouseButton(0))
+        {
+            Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
+            gun.Fire();
+        }
     }
 }
