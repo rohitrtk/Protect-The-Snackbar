@@ -23,7 +23,7 @@ public class Enemy_Basic : Enemy_Abstract
             if (Health <= 0) Dead = true;
             return;
         }
-
+        print("DEAD");
         Destroy(gameObject);
     }
 }

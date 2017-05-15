@@ -41,6 +41,7 @@ public abstract class Enemy_Abstract : MonoBehaviour
     public virtual void CalculateDamage(float damage)
     {
         _health -= damage;
+        print(damage + "|" + _health);
     }
 
     /// <summary>
