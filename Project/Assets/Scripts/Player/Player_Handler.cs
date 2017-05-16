@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handels local player
+/// Handles local player
 /// </summary>
 public partial class Player_Handler : MonoBehaviour
 {
@@ -20,7 +20,6 @@ public partial class Player_Handler : MonoBehaviour
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;
-
 
     protected void Start()
     {
@@ -90,6 +89,15 @@ public partial class Player_Handler : MonoBehaviour
     {
         //If the user hits escape, give them their cursor back
         if (Input.GetKeyDown("escape")) _paused = !_paused;
+
+        if (Input.GetKey("left shift"))
+        {
+            _moveSpeedScale = 1.25f;
+        }
+        else
+        {
+            _moveSpeedScale = 0.75f;
+        }
 
         // TODO: make this more efficient
         // Also need to make a bool for primary weapon

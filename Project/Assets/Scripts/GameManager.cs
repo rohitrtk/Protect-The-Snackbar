@@ -10,7 +10,7 @@ public partial class GameManager : MonoBehaviour
     /// </summary>
     public Transform Spawn;
     public GameObject PlayerPrefab;
-    public Player_Control Instance;
+    //public Player_Control Instance;
 
     /// <summary>
     /// Use this for initialization

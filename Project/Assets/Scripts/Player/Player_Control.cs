@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-
+﻿using System;
+using UnityEngine;
 /// <summary>
 /// Handles setting up the player and holds reference to other scripts the player uses.
 /// </summary>
+[Obsolete("Player_Control is deprecated, Please use the Player_Handler class instead.", true)]
 public partial class Player_Control : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;            // Players camera
