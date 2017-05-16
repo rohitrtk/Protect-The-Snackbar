@@ -23,7 +23,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         if (Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 5000f))
         {
             var go = hitInfo.transform;
-            print(hitInfo.transform.name);
+            //print(hitInfo.transform.name);
 
             if(go.tag.Equals("Enemy"))
             {

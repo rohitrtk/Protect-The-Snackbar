@@ -8,17 +8,10 @@ public partial class Player_Control : MonoBehaviour
     [SerializeField] private Camera _mainCamera;            // Players camera
     [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
 
-    private Player_Movement _playerMovement;                // Player movement object
     private bool _paused;                                   // Is this player paused?                    
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;                       
-
-    /// <summary>
-    /// Referance of the Player gameObject
-    /// Will be deleted
-    /// </summary>
-    public GameObject Instance;
 
     /// <summary>
     /// Use this for initialization
@@ -27,7 +20,6 @@ public partial class Player_Control : MonoBehaviour
     {
         _mainCamera = Camera.main;
         _paused = false;
-        _playerMovement = GetComponent<Player_Movement>();
 
         // Lock the player's cursor to the middle of the screen
         Cursor.lockState = CursorLockMode.Locked;

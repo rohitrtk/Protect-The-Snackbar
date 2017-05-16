@@ -57,6 +57,6 @@ public abstract class Enemy_Abstract : MonoBehaviour
 
     #region Variables
     [SerializeField] private float _health;
-    [SerializeField] private bool _dead;
+    private bool _dead;
     #endregion
 }

@@ -17,9 +17,7 @@ public partial class GameManager : MonoBehaviour
     /// </summary>
     void Start ()
     {
-        //Spawn a player
-        Instance = PlayerPrefab.GetComponent<Player_Control>();
-        Instance.Instance = Instantiate(PlayerPrefab, Spawn.position, Spawn.rotation) as GameObject;
+
     }
 
     /// <summary>
