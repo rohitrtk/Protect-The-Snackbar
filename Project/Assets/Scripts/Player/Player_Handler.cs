@@ -17,10 +17,10 @@ public partial class Player_Handler : MonoBehaviour
 
     // Players camera
     [SerializeField] private Camera _mainCamera;
-
-    private bool _paused;                                   // Is this player paused?                    
+                  
     // Cameras offset
     [SerializeField] private Vector3 _cameraOffset;
+
     //Object used as the visual repersentation of the player
     [SerializeField] private GameObject _playerBody;
 

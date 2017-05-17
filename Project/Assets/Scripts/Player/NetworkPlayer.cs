@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public artial class NetworkPlayer : Photon.MonoBehaviour {
+public partial class NetworkPlayer : Photon.MonoBehaviour {
 
     [SerializeField] private GameObject _myCamera;
 
@@ -16,7 +16,6 @@ public artial class NetworkPlayer : Photon.MonoBehaviour {
 
         if (photonView.isMine) //If this is my client's instance
         {
-
             _myCamera.SetActive(true); //Set my camera to the main one.
             GetComponent<Player_Handler>().enabled = true;//Allow youself to use the control script
 

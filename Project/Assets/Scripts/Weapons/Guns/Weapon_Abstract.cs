@@ -134,13 +134,4 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     }
 
     #endregion
-
-    #region Variables
-    [SerializeField] private int numberOfBullets;
-    [SerializeField] private int numberOfBulletsInGun;
-    [SerializeField] private float reloadTime;
-    [SerializeField] private float waitTime;
-    [SerializeField] private bool hasScope;
-    [SerializeField] private Transform _bulletSpawn;
-    #endregion
 }
