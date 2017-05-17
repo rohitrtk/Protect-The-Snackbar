@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Network_Enemy : Photon.MonoBehaviour
+public class Network_Enemy : AbstractNetworkSync
 {
 
     private Vector3 _realPosition;
@@ -10,12 +10,7 @@ public class Network_Enemy : Photon.MonoBehaviour
 
     private Enemy_Basic _enemy;
 
-    /// <summary>
-    /// //Smoothness, higher = more smooth but less accurate
-    /// </summary>
-    [SerializeField] private float _lerpSmoothing = 5f; 
-
-    void Start()
+    override protected void Start()
     {
         if (photonView.isMine)
         {
@@ -23,18 +18,18 @@ public class Network_Enemy : Photon.MonoBehaviour
         }
     }
 
-    void Update()
+    override protected void Update()
     {
 
         //If I am NOT the host/owner of enemy, set its position on my client to a mix of what I think it is and what the server thinks it is
         if (!photonView.isMine)
         {
-            transform.position = Vector3.Lerp(transform.position, _realPosition, Time.deltaTime * _lerpSmoothing);
-            transform.rotation = Quaternion.Lerp(transform.rotation, _realRotation, Time.deltaTime * _lerpSmoothing);
+            transform.position = Vector3.Lerp(transform.position, _realPosition, Time.deltaTime * LerpSmoothing);
+            transform.rotation = Quaternion.Lerp(transform.rotation, _realRotation, Time.deltaTime * LerpSmoothing);
         }
     }
 
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    override protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
 

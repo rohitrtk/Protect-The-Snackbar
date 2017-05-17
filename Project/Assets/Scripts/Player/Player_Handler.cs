@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles local player
+/// Handles player input and the like
 /// </summary>
 public partial class Player_Handler : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public partial class Player_Handler : MonoBehaviour
 
     [SerializeField] private GameObject _playerBody; //Object used as the visual repersentation of the player
 
-    private bool _paused;                                   // Is this player paused?                    
+    private bool _paused;                                   //Whether or not the player is paused TODO: make a gui for when the pause menu appears                 
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;
@@ -91,9 +91,7 @@ public partial class Player_Handler : MonoBehaviour
             _moveSpeedScale = 0.75f;
         }
 
-        // TODO: make this more efficient
-        // Also need to make a bool for primary weapon
-        //if(Input.GetMouseButton(0))
+        // TODO: make this more efficient also need to make a bool for primary weapon
         if (Input.GetButton("Fire1"))
         {
             Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();

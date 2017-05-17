@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NetworkController : MonoBehaviour {
 
-    private const string VERSION = "v0.0.2"; //Having this as different versions will keep us from accidentally connecting to each other while testing
+    private const string VERSION = "v0.0.3"; //Having this as different versions will keep us from accidentally connecting to each other while testing
     [SerializeField] private string _roomName = "Server01";
     [SerializeField] private string _playerPrefabName = "Player";
     [SerializeField] private Transform _spawn;
