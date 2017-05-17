@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public partial class Weapon_M4A1 : Weapon_Abstract
 {
+    // Is the gun shooting?
     bool shoot = false;
 
     /// <summary>

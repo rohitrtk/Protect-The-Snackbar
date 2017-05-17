@@ -1,28 +1,36 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Handles local player
 /// </summary>
 public partial class Player_Handler : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeedScale;
+    // The speed at which the player moves at
     [SerializeField] private float _moveSpeed;
 
-    [SerializeField] private Camera _mainCamera;            // Players camera
-    [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
+    // Speed is divided by this, basically makes the input values
+    // easier to work with (i.e _moveSpeed = 1 as opposed to _moveSpeed = 0.27)
+    [SerializeField] private float _moveSpeedScale;
 
-    [SerializeField] private GameObject _playerBody; //Object used as the visual repersentation of the player
+    // Players camera
+    [SerializeField] private Camera _mainCamera;
 
-    private bool _paused;                                   // Is this player paused?                    
+    // Cameras offset
+    [SerializeField] private Vector3 _cameraOffset;
+
+    //Object used as the visual repersentation of the player
+    [SerializeField] private GameObject _playerBody;
+
+    // Is this player paused?
+    private bool _paused;                    
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;
 
+    // Use this for initialization
     protected void Start()
     {
+        // Default player is not paused
         _paused = false;
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
@@ -32,37 +40,70 @@ public partial class Player_Handler : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    // Called once per frame
     protected void Update()
     {
-        Move(); 
+        // Checks for key presses
+        CheckKeysAndMouse();
+
+        // Moves the players transform
+        Move();
+
+        // Sets the rotation of the player
         Rotate();
 
-        Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
-
-        CheckKeysAndMouse();
+        // Moves the players camera
         MovePlayerCamera();
+
+        // Sets the cursor lock state based on if the player is paused or not
+        Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     /// <summary>
-    /// Handels the movement of the player
+    /// Handles the movement of the player
     /// </summary>
     protected void Move()
     {
-        //var horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
-        //var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
-        //Vector3 temp = new Vector3(verticalMove, 0.0f, horizontalMove);
+        // Stores the horizontal movement of the player
+        var horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
 
-        //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, Camera.main.transform.localEulerAngles.y, transform.localEulerAngles.z);
-        //transform.localPosition += temp;
-        //transform.Translate(horizontalMove, 0f, verticalMove);
+        // Stores the vertical movement of the player
+        var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
+        
+        // Stores the horizontal and vertical movement as a vector
+        Vector3 move = new Vector3(horizontalMove, 0.0f, verticalMove);
+
+        // Move the player based on the move vector relative to the world
+        transform.Translate(move, Space.World);
     }
 
     /// <summary>
     /// Handles the rotation of the player
     /// </summary>
-    [System.Obsolete]
     protected void Rotate()
     {
+        // Rotation along the x axis
+        var xRot = Input.GetAxis("Mouse X");
+
+        // Rotation along the y axis
+        var yRot = Input.GetAxis("Mouse Y") * -1;
+
+        // Get the rotation as a Vector3 and add the mouse rotations to it
+        Vector3 t = transform.localEulerAngles;
+        t.y += xRot;
+        t.x += yRot;
+
+        // Converts the angle to a negative value if the angle is greater than 180
+        if (t.x > 180) t.x -= 360;
+
+        // Clamp the angle between -45 degrees and 45 degrees
+        t.x = Mathf.Clamp(t.x, -45, 45);
+
+        // Convert the angle back to a positive value if it less than 0
+        if (t.x < 0) t.x += 360;
+
+        // Set the rotation to the Vector3 rotation
+        transform.localEulerAngles = t;
     }
 
     /// <summary>
@@ -70,29 +111,13 @@ public partial class Player_Handler : MonoBehaviour
     /// </summary>
     private void MovePlayerCamera()
     {
-        // Move camera to player
-        _mainCamera.transform.position = transform.position + _cameraOffset;
-        //_mainCamera.transform.position = transform.position;                    // This looks cooler
-        //_mainCamera.transform.Translate(_cameraOffset);
+        // Sets the cameras position to the players position
+        _mainCamera.transform.position = transform.position;
 
-        // Sets the players camera rotation to the rotation of the player
-        var xRot = Input.GetAxis("Mouse X");        // Rotation along the x axis
-        var yRot = Input.GetAxis("Mouse Y") * -1;   // Rotation along the y axis
+        // Translates the cameras position by the camera offset
+        _mainCamera.transform.Translate(_cameraOffset);
 
-        Vector3 t = transform.localEulerAngles;
-        t.y += xRot;
-        t.x += yRot;
-
-        transform.localEulerAngles = t;
-
-        // Fixes camera tilt 
-        //transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
-        //transform.Rotate(yRot * Vector3.right * Time.deltaTime);
-
-        //Vector3 rotation = transform.localRotation.eulerAngles;
-        //rotation.x = Mathf.Clamp(rotation.x, -45, 45);
-        //transform.localRotation = Quaternion.Euler(rotation);
-
+        // Sets the rotation of the camera to the players rotation
         _mainCamera.transform.rotation = transform.rotation;
     }
 
@@ -125,6 +150,13 @@ public partial class Player_Handler : MonoBehaviour
 /// </summary>
 public struct PlayerSpeeds
 {
+    /// <summary>
+    /// Walk speed scale
+    /// </summary>
     public const float Walk = 0.75f;
+
+    /// <summary>
+    /// Sprint speed scale
+    /// </summary>
     public const float Sprint = 1.25f;
 }

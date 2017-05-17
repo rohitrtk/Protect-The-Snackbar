@@ -1,25 +1,29 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public partial class NetworkPlayer : Photon.MonoBehaviour {
-
+public partial class NetworkPlayer : Photon.MonoBehaviour
+{
+    // The instance of a camera for the player
     [SerializeField] private GameObject _myCamera;
 
+    // Is this player alive?
     private bool _isAlive = true;
+
+    // This players position
     private Vector3 _position;
+
+    // This players rotation
     private Quaternion _rotation;
+
     [SerializeField] private float _lerpSmoothing = 5f; //Smoothness, higher = more smooth but less accurate
 
-	// Use this for initialization
-	void Start () {
-
+    // Use this for initialization
+    void Start ()
+    {
         if (photonView.isMine) //If this is my client's instance
         {
-
             _myCamera.SetActive(true); //Set my camera to the main one.
             GetComponent<Player_Handler>().enabled = true;//Allow youself to use the control script
-
         }
         else //If this isnt my client's instace
         {
@@ -30,8 +34,6 @@ public partial class NetworkPlayer : Photon.MonoBehaviour {
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //Are we reading our writing to the stream
-
-
         if (stream.isWriting)
         {
             //LAYOUT MATTERS!

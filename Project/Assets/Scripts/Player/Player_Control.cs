@@ -1,15 +1,20 @@
 ﻿using System;
 using UnityEngine;
+
 /// <summary>
 /// Handles setting up the player and holds reference to other scripts the player uses.
 /// </summary>
 [Obsolete("Player_Control is deprecated, Please use the Player_Handler class instead.", true)]
 public partial class Player_Control : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera;            // Players camera
-    [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
+    // Players camera
+    [SerializeField] private Camera _mainCamera;
 
-    private bool _paused;                                   // Is this player paused?                    
+    // Cameras offset
+    [SerializeField] private Vector3 _cameraOffset;
+
+    // Is this player paused?
+    private bool _paused;                    
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;                       
@@ -19,7 +24,10 @@ public partial class Player_Control : MonoBehaviour
     /// </summary>
     private void Start ()
     {
+        // Set this players camera to the scenes main camera
         _mainCamera = Camera.main;
+
+        // Default player is not paused
         _paused = false;
 
         // Lock the player's cursor to the middle of the screen
@@ -31,9 +39,13 @@ public partial class Player_Control : MonoBehaviour
     /// </summary>
     private void Update ()
     {
+        // Sets the cursor lock state based on if this player is paused
         Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
 
+        // Checks for key presses and mouse movements
         CheckKeysAndMouse();
+
+        // Moves the players camera
         MovePlayerCamera();
     }
 
@@ -43,8 +55,7 @@ public partial class Player_Control : MonoBehaviour
     private void MovePlayerCamera()
     {
         // Move camera to player
-        //_mainCamera.transform.position = transform.position + _cameraOffset;
-        _mainCamera.transform.position = transform.position;                    // This looks cooler
+        _mainCamera.transform.position = transform.position;
         _mainCamera.transform.Translate(_cameraOffset);
 
         // Sets the players camera rotation to the rotation of the player
@@ -55,6 +66,7 @@ public partial class Player_Control : MonoBehaviour
         transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
         transform.Rotate(yRot * Vector3.right * Time.deltaTime);
 
+        // Sets the main cameras rotation to the players rotation
         _mainCamera.transform.rotation = transform.rotation;
     }
 
