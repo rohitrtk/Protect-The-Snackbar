@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class for network syncing
+/// </summary>
 public abstract class AbstractNetworkSync : Photon.MonoBehaviour {
 
     /// <summary>
@@ -9,12 +12,9 @@ public abstract class AbstractNetworkSync : Photon.MonoBehaviour {
     /// </summary>
     [SerializeField] private float _lerpSmoothing = 5f;
 
-
-
     protected abstract void Start();
     protected abstract void Update();
     protected abstract void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info);
-
 
     /// <summary>
     /// Smoothness, higher = more smooth but less accurate
@@ -30,5 +30,4 @@ public abstract class AbstractNetworkSync : Photon.MonoBehaviour {
             _lerpSmoothing = value;
         }
     }
-
 }

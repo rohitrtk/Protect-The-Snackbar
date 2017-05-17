@@ -3,8 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class NetworkPlayer : Photon.MonoBehaviour {
-
+/// <summary>
+/// Networked player class, responsible for enabling this clients Player_Handler script
+/// </summary>
+public partial class NetworkPlayer : AbstractNetworkSync
+{
+    /// <summary>
+    /// Gameobject with reference to the scenes main camera
+    /// </summary>
     [SerializeField] private GameObject _myCamera;
 
     private bool _isAlive = true; //If the player is alive, may have to remove later for networking reasons
@@ -12,11 +18,10 @@ public partial class NetworkPlayer : Photon.MonoBehaviour {
     private Quaternion _rotation; // Server relative rotation
 
 
-    override protected void Start()
+    protected override void Start()
     {
         if (photonView.isMine) //If this is my client's instance
-        {
-
+        { 
             _myCamera.SetActive(true); //Set my camera to the main one.
             GetComponent<Player_Handler>().enabled = true;//Allow me to use the player controls script
         }
@@ -32,11 +37,9 @@ public partial class NetworkPlayer : Photon.MonoBehaviour {
         }
     }
 
-    override protected void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    protected override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //Are we reading our writing to the stream
-
-
         if (stream.isWriting)
         {
             //LAYOUT MATTERS!

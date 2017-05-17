@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Abstract class for enemies
+/// </summary>
 public abstract class Enemy_Abstract : MonoBehaviour
 {
+    #region Variables
+    /// <summary>
+    /// This enemies health
+    /// </summary>
+    [SerializeField] private float _health;
+
+    /// <summary>
+    /// Is this enemy dead?
+    /// </summary>
+    private bool _dead;
+    #endregion
+
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
@@ -35,10 +47,5 @@ public abstract class Enemy_Abstract : MonoBehaviour
             _dead = value;
         }
     }
-    #endregion
-
-    #region Variables
-    [SerializeField] private float _health;
-    private bool _dead;
     #endregion
 }

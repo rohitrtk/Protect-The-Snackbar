@@ -5,6 +5,16 @@
 /// </summary>
 public abstract partial class Weapon_Abstract : MonoBehaviour
 {
+    #region Variables
+    [SerializeField] private int numberOfBullets;
+    [SerializeField] private int numberOfBulletsInGun;
+    [SerializeField] private float reloadTime;
+    [SerializeField] private float waitTime;
+    [SerializeField] private bool hasScope;
+    [SerializeField] private Transform _bulletSpawn;
+    [SerializeField] private Camera _playerCam;
+    #endregion
+
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
@@ -35,6 +45,9 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     #endregion
 
     #region Getters and Setters
+    /// <summary>
+    /// The number of bullets the gun can hold (Ammo count)
+    /// </summary>
     protected int NumberOfBullets
     {
         get
@@ -46,29 +59,10 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
             numberOfBullets = value;
         }
     }
-    protected float ReloadTime
-    {
-        get
-        {
-            return reloadTime;
-        }
-        set
 
-        {
-            reloadTime = value;
-        }
-    }
-    protected bool HasScope
-    {
-        get
-        {
-            return hasScope;
-        }
-        set
-        {
-            hasScope = value;
-        }
-    }
+    /// <summary>
+    /// The number of bullets currently in the gun (Current ammo count)
+    /// </summary>
     protected int NumberOfBulletsInGun
     {
         get
@@ -81,6 +75,41 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
             numberOfBulletsInGun = value;
         }
     }
+
+    /// <summary>
+    /// The amount of time in seconds it takes to reaload the gun
+    /// </summary>
+    protected float ReloadTime
+    {
+        get
+        {
+            return reloadTime;
+        }
+        set
+
+        {
+            reloadTime = value;
+        }
+    }
+
+    /// <summary>
+    /// Does this gun have a scope?
+    /// </summary>
+    protected bool HasScope
+    {
+        get
+        {
+            return hasScope;
+        }
+        set
+        {
+            hasScope = value;
+        }
+    }
+
+    /// <summary>
+    /// Time between shots firing
+    /// </summary>
     protected float WaitTime
     {
         get
@@ -94,6 +123,9 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns players camera
+    /// </summary>
     protected Camera PlayerCam
     {
         get
@@ -101,6 +133,5 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
             return _playerCam;
         }
     }
-
     #endregion
 }

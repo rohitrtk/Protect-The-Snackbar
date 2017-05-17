@@ -5,8 +5,8 @@ using UnityEngine;
 /// <summary>
 /// Temp script to spawn an enemy every so often, in final game it will be wave based
 /// </summary>
-public class EnemySpawnerBasic : MonoBehaviour {
-
+public class EnemySpawnerBasic : MonoBehaviour
+{
     [SerializeField] private string _enemyPrefab = "BasicEnemy"; //Name of the enemy prefab
     [SerializeField] private float _spawnInterval = 10f; //How often should an enemy spawn in seconds
     private float _maxTime; //A copy of _spawnInterval before it starts to decrement

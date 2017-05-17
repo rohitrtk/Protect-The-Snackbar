@@ -2,17 +2,30 @@
 using UnityEngine;
 
 /// <summary>
+/// DEPRECATED!
 /// Handles setting up the player and holds reference to other scripts the player uses.
 /// </summary>
 [Obsolete("Player_Control is deprecated, Please use the Player_Handler class instead.", true)]
 public partial class Player_Control : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera;            // Players camera
-    [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
+    /// <summary>
+    /// Players camera
+    /// </summary>
+    [SerializeField] private Camera _mainCamera;
 
-    private bool _paused;                                   // Is this player paused?                    
+    /// <summary>
+    /// Cameras offset
+    /// </summary>
+    [SerializeField] private Vector3 _cameraOffset;
 
-    // PlayerWeapons gameobject (Holds reference to the attached weapons)
+    /// <summary>
+    /// Is this player paused?  
+    /// </summary>
+    private bool _paused;
+
+    /// <summary>
+    /// PlayerWeapons gameobject (Holds reference to the attached weapons)
+    /// </summary>
     [SerializeField] private Transform _playerWeapons;                       
 
     /// <summary>

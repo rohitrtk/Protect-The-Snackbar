@@ -30,7 +30,9 @@ public partial class Player_Handler : MonoBehaviour
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;
 
-    // Use this for initialization
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
     protected void Start()
     {
         // Default player is not paused
@@ -43,7 +45,9 @@ public partial class Player_Handler : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Called once per frame
+    /// <summary>
+    /// Called once per frame
+    /// </summary>
     protected void Update()
     {
         Move();
@@ -70,8 +74,8 @@ public partial class Player_Handler : MonoBehaviour
         // Stores the horizontal and vertical movement as a vector
         Vector3 move = new Vector3(horizontalMove, 0.0f, verticalMove);
 
-        // Move the player based on the move vector relative to the world
-        transform.Translate(move, Space.World);
+        // Move the player based on the move vector relative to its self
+        transform.Translate(move, Space.Self);
     }
 
     /// <summary>
