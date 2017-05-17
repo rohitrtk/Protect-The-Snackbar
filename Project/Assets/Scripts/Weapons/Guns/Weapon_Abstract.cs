@@ -12,15 +12,16 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
 
     #region Methods
     /// <summary>
-    /// Called to cast a ray forward from the players BulletSpawn object
+    /// Handles the player's firing logic and setting raycasts.
     /// </summary>
     public virtual void Fire()
     {
         RaycastHit hitInfo;
+        Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); //Sets the middle of the players view as our start point
 
-        Debug.DrawRay(BulletSpawn.position, BulletSpawn.forward, Color.red);
+        Debug.DrawRay(rayStart, PlayerCam.transform.forward*5000f, Color.red);
 
-        if (Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 5000f))
+        if (Physics.Raycast(rayStart, PlayerCam.transform.forward, out hitInfo, 5000f))
         {
             Transform go = hitInfo.transform;
             //print(hitInfo.transform.name);
@@ -93,11 +94,11 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         }
     }
 
-    protected Transform BulletSpawn
+    protected Camera PlayerCam
     {
         get
         {
-            return _bulletSpawn;
+            return _playerCam;
         }
     }
 
@@ -109,6 +110,6 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private float reloadTime;
     [SerializeField] private float waitTime;
     [SerializeField] private bool hasScope;
-    [SerializeField] private Transform _bulletSpawn;
+    [SerializeField] private Camera _playerCam;
     #endregion
 }
