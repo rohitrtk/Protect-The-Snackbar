@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkPlayer : AbstractNetworkSync
-{
+public partial class NetworkPlayer : Photon.MonoBehaviour {
 
     [SerializeField] private GameObject _myCamera;
 
@@ -13,10 +12,11 @@ public class NetworkPlayer : AbstractNetworkSync
     private Quaternion _rotation; // Server relative rotation
 
 
-    override protected void Start () {
-
-        if (photonView.isMine) //If this is my client's player
+    override protected void Start()
+    {
+        if (photonView.isMine) //If this is my client's instance
         {
+
             _myCamera.SetActive(true); //Set my camera to the main one.
             GetComponent<Player_Handler>().enabled = true;//Allow me to use the player controls script
         }

@@ -8,21 +8,32 @@ using UnityEngine;
 /// </summary>
 public partial class Player_Handler : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeedScale;
+    // The speed at which the player moves at
     [SerializeField] private float _moveSpeed;
 
-    [SerializeField] private Camera _mainCamera;            // Players camera
-    [SerializeField] private Vector3 _cameraOffset;         // Cameras offset
+    // Speed is divided by this, basically makes the input values
+    // easier to work with (i.e _moveSpeed = 1 as opposed to _moveSpeed = 0.27)
+    [SerializeField] private float _moveSpeedScale;
 
-    [SerializeField] private GameObject _playerBody; //Object used as the visual repersentation of the player
+    // Players camera
+    [SerializeField] private Camera _mainCamera;
 
-    private bool _paused;                                   //Whether or not the player is paused TODO: make a gui for when the pause menu appears                 
+    // Cameras offset
+    [SerializeField] private Vector3 _cameraOffset;
+
+    //Object used as the visual repersentation of the player
+    [SerializeField] private GameObject _playerBody;
+
+    // Is this player paused?
+    private bool _paused;
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;
 
+    // Use this for initialization
     protected void Start()
     {
+        // Default player is not paused
         _paused = false;
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
@@ -32,25 +43,65 @@ public partial class Player_Handler : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    // Called once per frame
     protected void Update()
     {
-        Move(); 
+        Move();
+        Rotate();
 
-        Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
-
-        CheckKeysAndMouse();
+        // Moves the players camera
         MovePlayerCamera();
+
+        // Sets the cursor lock state based on if the player is paused or not
+        Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     /// <summary>
-    /// Handels the movement of the player
+    /// Handles the movement of the player
     /// </summary>
     protected void Move()
     {
+        // Stores the horizontal movement of the player
         var horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
+
+        // Stores the vertical movement of the player
         var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
 
-        transform.Translate(horizontalMove, 0f, verticalMove);
+        // Stores the horizontal and vertical movement as a vector
+        Vector3 move = new Vector3(horizontalMove, 0.0f, verticalMove);
+
+        // Move the player based on the move vector relative to the world
+        transform.Translate(move, Space.World);
+    }
+
+    /// <summary>
+    /// <summary>
+    /// Handles the rotation of the player
+    /// </summary>
+    protected void Rotate()
+    {
+        // Rotation along the x axis
+        var xRot = Input.GetAxis("Mouse X");
+
+        // Rotation along the y axis
+        var yRot = Input.GetAxis("Mouse Y") * -1;
+
+        // Get the rotation as a Vector3 and add the mouse rotations to it
+        Vector3 t = transform.localEulerAngles;
+        t.y += xRot;
+        t.x += yRot;
+
+        // Converts the angle to a negative value if the angle is greater than 180
+        if (t.x > 180) t.x -= 360;
+
+        // Clamp the angle between -45 degrees and 45 degrees
+        t.x = Mathf.Clamp(t.x, -45, 45);
+
+        // Convert the angle back to a positive value if it less than 0
+        if (t.x < 0) t.x += 360;
+
+        // Set the rotation to the Vector3 rotation
+        transform.localEulerAngles = t;
     }
 
     /// <summary>
@@ -58,19 +109,13 @@ public partial class Player_Handler : MonoBehaviour
     /// </summary>
     private void MovePlayerCamera()
     {
-        // Move camera to player
-        //_mainCamera.transform.position = transform.position + _cameraOffset;
-        _mainCamera.transform.position = transform.position;                    // This looks cooler
+        // Sets the cameras position to the players position
+        _mainCamera.transform.position = transform.position;
+
+        // Translates the cameras position by the camera offset
         _mainCamera.transform.Translate(_cameraOffset);
 
-        // Sets the players camera rotation to the rotation of the player
-        var xRot = Input.GetAxis("Mouse X") * 60f;
-        var yRot = Input.GetAxis("Mouse Y") * -60f;
-
-        // Fixes camera tilt 
-        transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
-        transform.Rotate(yRot * Vector3.right * Time.deltaTime);
-
+        // Sets the rotation of the camera to the players rotation
         _mainCamera.transform.rotation = transform.rotation;
     }
 
@@ -82,14 +127,9 @@ public partial class Player_Handler : MonoBehaviour
         //If the user hits escape, give them their cursor back
         if (Input.GetKeyDown("escape")) _paused = !_paused;
 
-        if (Input.GetKey("left shift"))
-        {
-            _moveSpeedScale = 1.25f;
-        }
-        else
-        {
-            _moveSpeedScale = 0.75f;
-        }
+        // If the user presses & holds left shift, set speed scale to sprint speed scale
+        // else return it to walk speed scale
+        _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
         // TODO: make this more efficient also need to make a bool for primary weapon
         if (Input.GetButton("Fire1"))
@@ -98,4 +138,21 @@ public partial class Player_Handler : MonoBehaviour
             gun.Fire();
         }
     }
+}
+
+/// <summary>
+/// Struct contains constants for _moveSpeedScale in the Player_Handler class
+/// KEEP THIS IN THE Player_Handler SCRIPT!!!
+/// </summary>
+public struct PlayerSpeeds
+{
+    /// <summary>
+    /// Walk speed scale
+    /// </summary>
+    public const float Walk = 0.75f;
+
+    /// <summary>
+    /// Sprint speed scale
+    /// </summary>
+    public const float Sprint = 1.25f;
 }
