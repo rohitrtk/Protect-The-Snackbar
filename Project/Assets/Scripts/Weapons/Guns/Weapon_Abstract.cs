@@ -22,13 +22,12 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
 
         if (Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 5000f))
         {
-            var go = hitInfo.transform;
+            Transform go = hitInfo.transform;
             //print(hitInfo.transform.name);
 
             if(go.tag.Equals("Enemy"))
             {
-                Enemy_Abstract ec = go.GetComponent<Enemy_Abstract>();
-                ec.CalculateDamage(50);
+                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, 2f);
             }
         }
     }

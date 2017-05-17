@@ -17,6 +17,11 @@ public abstract class Enemy_Abstract : MonoBehaviour
         {
             return _health;
         }
+
+        set
+        {
+            _health = value;
+        }
     }
     public bool Dead
     {
@@ -29,29 +34,6 @@ public abstract class Enemy_Abstract : MonoBehaviour
         {
             _dead = value;
         }
-    }
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    /// Takes damage away from Health
-    /// </summary>
-    /// <param name="damage"></param>
-    public virtual void CalculateDamage(float damage)
-    {
-        _health -= damage;
-        print(damage + "|" + _health);
-    }
-
-    /// <summary>
-    /// Takes damage, changes it based on range and subtracts from health
-    /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="range"></param>
-    public virtual void CalculateDamage(float damage, float range)
-    {
-        throw new NotImplementedException();
     }
     #endregion
 

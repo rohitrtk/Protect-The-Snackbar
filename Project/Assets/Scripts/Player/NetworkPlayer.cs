@@ -11,8 +11,8 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private Quaternion _rotation;
     [SerializeField] private float _lerpSmoothing = 5f; //Smoothness, higher = more smooth but less accurate
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         if (photonView.isMine) //If this is my client's instance
         {

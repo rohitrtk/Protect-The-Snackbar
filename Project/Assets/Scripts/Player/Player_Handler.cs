@@ -26,7 +26,7 @@ public partial class Player_Handler : MonoBehaviour
         _paused = false;
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
-        _playerBody.layer = 8; 
+        _playerBody.layer = 8;
 
         // Lock the player's cursor to the middle of the screen
         Cursor.lockState = CursorLockMode.Locked;
@@ -35,7 +35,6 @@ public partial class Player_Handler : MonoBehaviour
     protected void Update()
     {
         Move(); 
-        Rotate();
 
         Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
 
@@ -52,13 +51,6 @@ public partial class Player_Handler : MonoBehaviour
         var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
 
         transform.Translate(horizontalMove, 0f, verticalMove);
-    }
-
-    /// <summary>
-    /// Handles the rotation of the player
-    /// </summary>
-    protected void Rotate()
-    {
     }
 
     /// <summary>

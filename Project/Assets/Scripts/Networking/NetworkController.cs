@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NetworkController : MonoBehaviour {
 
-    private const string VERSION = "v0.0.1";
+    private const string VERSION = "v0.0.2"; //Having this as different versions will keep us from accidentally connecting to each other while testing
     [SerializeField] private string _roomName = "Server01";
     [SerializeField] private string _playerPrefabName = "Player";
     [SerializeField] private Transform _spawn;
@@ -23,11 +23,14 @@ public class NetworkController : MonoBehaviour {
         PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default); //Attempt to join a room, if none exist, make one.
     }
 
-    // called when a room is joined by the player //So when a client connects to another client
+    // called when a room is joined by a player
     void OnJoinedRoom()
     {
         PhotonNetwork.Instantiate(_playerPrefabName, _spawn.position, _spawn.rotation, 0); //Spawns a player on the server, everyone can see it!
+
     }
+
+    
 
 
 }
