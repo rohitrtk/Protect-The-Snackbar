@@ -48,15 +48,19 @@ public partial class Player_Handler : MonoBehaviour
     /// </summary>
     protected void Move()
     {
-        var horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
-        var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
+        //var horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
+        //var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
+        //Vector3 temp = new Vector3(verticalMove, 0.0f, horizontalMove);
 
-        transform.Translate(horizontalMove, 0f, verticalMove);
+        //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, Camera.main.transform.localEulerAngles.y, transform.localEulerAngles.z);
+        //transform.localPosition += temp;
+        //transform.Translate(horizontalMove, 0f, verticalMove);
     }
 
     /// <summary>
     /// Handles the rotation of the player
     /// </summary>
+    [System.Obsolete]
     protected void Rotate()
     {
     }
@@ -67,17 +71,27 @@ public partial class Player_Handler : MonoBehaviour
     private void MovePlayerCamera()
     {
         // Move camera to player
-        //_mainCamera.transform.position = transform.position + _cameraOffset;
-        _mainCamera.transform.position = transform.position;                    // This looks cooler
-        _mainCamera.transform.Translate(_cameraOffset);
+        _mainCamera.transform.position = transform.position + _cameraOffset;
+        //_mainCamera.transform.position = transform.position;                    // This looks cooler
+        //_mainCamera.transform.Translate(_cameraOffset);
 
         // Sets the players camera rotation to the rotation of the player
-        var xRot = Input.GetAxis("Mouse X") * 60f;
-        var yRot = Input.GetAxis("Mouse Y") * -60f;
+        var xRot = Input.GetAxis("Mouse X");        // Rotation along the x axis
+        var yRot = Input.GetAxis("Mouse Y") * -1;   // Rotation along the y axis
+
+        Vector3 t = transform.localEulerAngles;
+        t.y += xRot;
+        t.x += yRot;
+
+        transform.localEulerAngles = t;
 
         // Fixes camera tilt 
-        transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
-        transform.Rotate(yRot * Vector3.right * Time.deltaTime);
+        //transform.Rotate(xRot * Vector3.up * Time.deltaTime, Space.World);
+        //transform.Rotate(yRot * Vector3.right * Time.deltaTime);
+
+        //Vector3 rotation = transform.localRotation.eulerAngles;
+        //rotation.x = Mathf.Clamp(rotation.x, -45, 45);
+        //transform.localRotation = Quaternion.Euler(rotation);
 
         _mainCamera.transform.rotation = transform.rotation;
     }
@@ -90,14 +104,9 @@ public partial class Player_Handler : MonoBehaviour
         //If the user hits escape, give them their cursor back
         if (Input.GetKeyDown("escape")) _paused = !_paused;
 
-        if (Input.GetKey("left shift"))
-        {
-            _moveSpeedScale = 1.25f;
-        }
-        else
-        {
-            _moveSpeedScale = 0.75f;
-        }
+        // If the user presses & holds left shift, set speed scale to sprint speed scale
+        // else return it to walk speed scale
+        _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
         // TODO: make this more efficient
         // Also need to make a bool for primary weapon
@@ -108,4 +117,14 @@ public partial class Player_Handler : MonoBehaviour
             gun.Fire();
         }
     }
+}
+
+/// <summary>
+/// Struct contains constants for _moveSpeedScale in the Player_Handler class
+/// KEEP THIS IN THE Player_Handler SCRIPT!!!
+/// </summary>
+public struct PlayerSpeeds
+{
+    public const float Walk = 0.75f;
+    public const float Sprint = 1.25f;
 }

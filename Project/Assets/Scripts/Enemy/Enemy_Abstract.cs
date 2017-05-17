@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy_Abstract : MonoBehaviour
+public abstract partial class Enemy_Abstract : MonoBehaviour
 {
     #region Abstract Methods
     protected abstract void Start();

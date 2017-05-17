@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Class for the M4A1
 /// </summary>
-public class Weapon_M4A1 : Weapon_Abstract
+public partial class Weapon_M4A1 : Weapon_Abstract
 {
     bool shoot = false;
 

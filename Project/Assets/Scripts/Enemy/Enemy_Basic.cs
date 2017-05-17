@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Basic : Enemy_Abstract
+public partial class Enemy_Basic : Enemy_Abstract
 {
     /// <summary>
     /// Use this for initialization

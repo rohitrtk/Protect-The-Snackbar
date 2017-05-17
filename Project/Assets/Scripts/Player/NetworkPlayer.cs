@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkPlayer : Photon.MonoBehaviour {
+public partial class NetworkPlayer : Photon.MonoBehaviour {
 
     [SerializeField] private GameObject _myCamera;
 
