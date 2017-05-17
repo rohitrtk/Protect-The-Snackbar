@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
-/// Handles local player
+/// Handles player input and the like
 /// </summary>
 public partial class Player_Handler : MonoBehaviour
 {
@@ -15,9 +18,9 @@ public partial class Player_Handler : MonoBehaviour
     // Players camera
     [SerializeField] private Camera _mainCamera;
 
+    private bool _paused;                                   // Is this player paused?                    
     // Cameras offset
     [SerializeField] private Vector3 _cameraOffset;
-
     //Object used as the visual repersentation of the player
     [SerializeField] private GameObject _playerBody;
 
@@ -34,7 +37,7 @@ public partial class Player_Handler : MonoBehaviour
         _paused = false;
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
-        _playerBody.layer = 8; 
+        _playerBody.layer = 8;
 
         // Lock the player's cursor to the middle of the screen
         Cursor.lockState = CursorLockMode.Locked;
@@ -43,13 +46,7 @@ public partial class Player_Handler : MonoBehaviour
     // Called once per frame
     protected void Update()
     {
-        // Checks for key presses
-        CheckKeysAndMouse();
-
-        // Moves the players transform
-        Move();
-
-        // Sets the rotation of the player
+        Move(); 
         Rotate();
 
         // Moves the players camera
@@ -77,6 +74,7 @@ public partial class Player_Handler : MonoBehaviour
         transform.Translate(move, Space.World);
     }
 
+    /// <summary>
     /// <summary>
     /// Handles the rotation of the player
     /// </summary>
@@ -133,9 +131,7 @@ public partial class Player_Handler : MonoBehaviour
         // else return it to walk speed scale
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
-        // TODO: make this more efficient
-        // Also need to make a bool for primary weapon
-        //if(Input.GetMouseButton(0))
+        // TODO: make this more efficient also need to make a bool for primary weapon
         if (Input.GetButton("Fire1"))
         {
             Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();

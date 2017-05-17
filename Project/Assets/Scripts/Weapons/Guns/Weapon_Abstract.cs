@@ -22,36 +22,25 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
 
     #region Methods
     /// <summary>
-    /// Called to cast a ray forward from the players BulletSpawn object
+    /// Handles the player's firing logic and setting raycasts.
     /// </summary>
     public virtual void Fire()
     {
         // Holds information for the object which is hit by the ray cast
         RaycastHit hitInfo;
+        Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); //Sets the middle of the players view as our start point
 
-        // Debug draw ray
         Debug.DrawRay(BulletSpawn.position, BulletSpawn.forward, Color.red);
 
-        // Cast the ray
         if (Physics.Raycast(BulletSpawn.position, BulletSpawn.forward, out hitInfo, 5000f))
         {
-            // Store the hit objects transform
-            Transform go = hitInfo.transform;
+            var go = hitInfo.transform;
             //print(hitInfo.transform.name);
 
             // If the object hit has a tag the same as Enemy
             if(go.tag.Equals("Enemy"))
             {
-                // Get the enemy component from that object
-                Enemy_Abstract ec = go.GetComponent<Enemy_Abstract>();
-                if(!ec)
-                {
-                    print("The enemy that was just hit does not have an Enemy_Abstract script!");
-                    return;
-                }
-
-                // Deal damage to the enemy
-                ec.CalculateDamage(50);
+                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, 2f);
             }
         }
     }
@@ -136,16 +125,22 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// The transform for which the ray is cast from
-    /// </summary>
     protected Transform BulletSpawn
     {
         get
         {
-            return _bulletSpawn;
+            return _playerCam;
         }
     }
 
+    #endregion
+
+    #region Variables
+    [SerializeField] private int numberOfBullets;
+    [SerializeField] private int numberOfBulletsInGun;
+    [SerializeField] private float reloadTime;
+    [SerializeField] private float waitTime;
+    [SerializeField] private bool hasScope;
+    [SerializeField] private Transform _bulletSpawn;
     #endregion
 }

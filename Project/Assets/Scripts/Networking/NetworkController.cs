@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
 public class NetworkController : MonoBehaviour
 {
+
     private const string VERSION = "v0.0.1";
     [SerializeField] private string _roomName = "Server01";
     [SerializeField] private string _playerPrefabName = "Player";
@@ -24,9 +22,12 @@ public class NetworkController : MonoBehaviour
         PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default); //Attempt to join a room, if none exist, make one.
     }
 
-    // Called when a room is joined by the player //So when a client connects to another client
+    // called when a room is joined by the player //So when a client connects to another client
     void OnJoinedRoom()
     {
         PhotonNetwork.Instantiate(_playerPrefabName, _spawn.position, _spawn.rotation, 0); //Spawns a player on the server, everyone can see it!
+
     }
+
+
 }

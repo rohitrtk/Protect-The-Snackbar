@@ -78,7 +78,6 @@ public partial class Player_Control : MonoBehaviour
         //If the user hits escape, give them their cursor back
         if (Input.GetKeyDown("escape")) _paused = !_paused;
 
-        // TODO: make this more efficient
         // Also need to make a bool for primary weapon
         //if(Input.GetMouseButton(0))
         if(Input.GetButton("Fire1"))

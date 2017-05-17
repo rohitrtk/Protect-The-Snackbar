@@ -8,8 +8,8 @@ using UnityEngine;
 /// </summary>
 public partial class Weapon_M4A1 : Weapon_Abstract
 {
-    // Is the gun shooting?
-    bool shoot = false;
+#pragma warning disable 0414 //Disables the goddamn warning for the shoot bool
+    bool shoot = false; //Whats this for?
 
     /// <summary>
     /// Use this for initialization

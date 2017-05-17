@@ -5,6 +5,8 @@ using UnityEngine;
 
 public partial class Enemy_Basic : Enemy_Abstract
 {
+    [SerializeField] private GameObject _model;
+
     /// <summary>
     /// Use this for initialization
     /// </summary>
@@ -18,14 +20,22 @@ public partial class Enemy_Basic : Enemy_Abstract
     /// </summary>
     protected override void Update()
     {
-        if(!Dead)
+        if(Health <= 0)
         {
-            if (Health <= 0) Dead = true;
+            Dead = true;
         }
-        else
+
+        if (Dead)
         {
-            print("DEAD");
-            Destroy(gameObject);
+            Health = 0; //Keep reseting health so that we dont get a stack overflow from shooting it too many times
+
+            //Make a new material(So it doesnt make all red materials black) and apply it to the dead enemy
+            Color black = new Color(0, 0, 0, 1);
+            MeshRenderer mesh = _model.GetComponent<MeshRenderer>();
+            Material blackMaterial = new Material(Shader.Find("Standard"));
+            blackMaterial.color = black;
+            mesh.material = blackMaterial;
+
         }
     }
 }

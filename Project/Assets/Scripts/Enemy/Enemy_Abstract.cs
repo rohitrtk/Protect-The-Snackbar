@@ -17,6 +17,11 @@ public abstract partial class Enemy_Abstract : MonoBehaviour
         {
             return _health;
         }
+
+        set
+        {
+            _health = value;
+        }
     }
     public bool Dead
     {
@@ -30,6 +35,11 @@ public abstract partial class Enemy_Abstract : MonoBehaviour
             _dead = value;
         }
     }
+    #endregion
+
+    #region Variables
+    [SerializeField] private float _health;
+    private bool _dead;
     #endregion
 
     #region Methods
@@ -53,10 +63,5 @@ public abstract partial class Enemy_Abstract : MonoBehaviour
     {
         throw new NotImplementedException();
     }
-    #endregion
-
-    #region Variables
-    [SerializeField] private float _health;
-    private bool _dead;
     #endregion
 }
