@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Enemy_Basic : Enemy_Abstract
+public class Enemy_Basic : Enemy_Abstract
 {
     [SerializeField] private GameObject _model;
 

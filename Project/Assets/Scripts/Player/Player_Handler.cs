@@ -17,7 +17,7 @@ public partial class Player_Handler : MonoBehaviour
 
     // Players camera
     [SerializeField] private Camera _mainCamera;
-                  
+
     // Cameras offset
     [SerializeField] private Vector3 _cameraOffset;
 
@@ -25,7 +25,7 @@ public partial class Player_Handler : MonoBehaviour
     [SerializeField] private GameObject _playerBody;
 
     // Is this player paused?
-    private bool _paused;                    
+    private bool _paused;
 
     // PlayerWeapons gameobject (Holds reference to the attached weapons)
     [SerializeField] private Transform _playerWeapons;
@@ -46,7 +46,7 @@ public partial class Player_Handler : MonoBehaviour
     // Called once per frame
     protected void Update()
     {
-        Move(); 
+        Move();
         Rotate();
 
         // Moves the players camera
@@ -66,7 +66,7 @@ public partial class Player_Handler : MonoBehaviour
 
         // Stores the vertical movement of the player
         var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
-        
+
         // Stores the horizontal and vertical movement as a vector
         Vector3 move = new Vector3(horizontalMove, 0.0f, verticalMove);
 
