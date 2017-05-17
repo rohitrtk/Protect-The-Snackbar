@@ -6,10 +6,9 @@ using UnityEngine;
 /// <summary>
 /// Class for the M4A1
 /// </summary>
-public class Weapon_M4A1 : Weapon_Abstract
+public partial class Weapon_M4A1 : Weapon_Abstract
 {
-
-    #pragma warning disable 0414 //Disables the goddamn warning for the shoot bool
+#pragma warning disable 0414 //Disables the goddamn warning for the shoot bool
     bool shoot = false; //Whats this for?
 
     /// <summary>

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy_Abstract : MonoBehaviour
+public abstract partial class Enemy_Abstract : MonoBehaviour
 {
     #region Abstract Methods
     protected abstract void Start();
@@ -40,5 +40,28 @@ public abstract class Enemy_Abstract : MonoBehaviour
     #region Variables
     [SerializeField] private float _health;
     private bool _dead;
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Takes damage away from Health
+    /// </summary>
+    /// <param name="damage"></param>
+    public virtual void CalculateDamage(float damage)
+    {
+        _health -= damage;
+        print(damage + "|" + _health);
+    }
+
+    /// <summary>
+    /// Takes damage, changes it based on range and subtracts from health
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="range"></param>
+    public virtual void CalculateDamage(float damage, float range)
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 }

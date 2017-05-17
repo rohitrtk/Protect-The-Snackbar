@@ -73,7 +73,5 @@ public class Network_Enemy : AbstractNetworkSync
         {
             Debug.LogError("You tried to set damage to an object you dont own! Did you make sure the RPC was only sent to the master? ");
         }
-
-        
     }
 }
