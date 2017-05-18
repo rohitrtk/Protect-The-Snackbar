@@ -3,7 +3,7 @@
 /// <summary>
 /// Abstract class for enemies
 /// </summary>
-public abstract class Enemy_Abstract : MonoBehaviour
+public abstract partial class Enemy_Abstract : MonoBehaviour
 {
     #region Variables
     /// <summary>

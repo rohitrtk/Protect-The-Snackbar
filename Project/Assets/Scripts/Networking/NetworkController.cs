@@ -28,8 +28,4 @@ public class NetworkController : MonoBehaviour {
         PhotonNetwork.Instantiate(_playerPrefabName, _spawn.position, _spawn.rotation, 0); // Spawns a player on the server, everyone can see it!
 
     }
-
-    
-
-
 }

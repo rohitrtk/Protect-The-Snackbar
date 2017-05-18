@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Abstract class for weapons
@@ -11,36 +12,67 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private float reloadTime;
     [SerializeField] private float waitTime;
     [SerializeField] private bool hasScope;
+
+    [SerializeField] private AudioSource[] firingSounds;
+
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
+
+    /// <summary>
+    /// Can the gun shoot right now?
+    /// </summary>
+    [SerializeField] private bool _canShoot = true;
     #endregion
 
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
+    protected abstract void PlaySound(bool held);
     #endregion
 
     #region Methods
     /// <summary>
     /// Handles the player's firing logic and setting raycasts.
     /// </summary>
-    public virtual void Fire()
+    public virtual void Fire(bool held)
     {
+        if(!_canShoot)
+        {
+            StartCoroutine(Wait(WaitTime));
+            return;
+        }
+
+        // Fire Code
+
         RaycastHit hitInfo;
         Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); //Sets the middle of the players view as our start point
 
-        Debug.DrawRay(rayStart, PlayerCam.transform.forward*5000f, Color.red);
+        Debug.DrawRay(rayStart, PlayerCam.transform.forward * 5000f, Color.red);
 
         if (Physics.Raycast(rayStart, PlayerCam.transform.forward, out hitInfo, 5000f))
         {
             Transform go = hitInfo.transform;
             //print(hitInfo.transform.name);
 
-            if(go.tag.Equals("Enemy"))
+            if (go.tag.Equals("Enemy"))
             {
                 go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, 2f);
             }
         }
+
+        _canShoot = false;
+    }
+
+    /// <summary>
+    /// Will wait x amount of seconds before setting _canShoot to
+    /// true where x is the param waitTime in seconds
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <returns></returns>
+    protected virtual IEnumerator Wait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        _canShoot = true;
     }
     #endregion
 
@@ -131,6 +163,19 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         get
         {
             return _playerCam;
+        }
+    }
+
+    public AudioSource[] FiringSounds
+    {
+        get
+        {
+            return firingSounds;
+        }
+
+        set
+        {
+            firingSounds = value;
         }
     }
     #endregion

@@ -85,7 +85,7 @@ public partial class Player_Control : MonoBehaviour
         if(Input.GetButton("Fire1"))
         {
             Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
-            gun.Fire();
+            //gun.Fire();
         }
     }
 }

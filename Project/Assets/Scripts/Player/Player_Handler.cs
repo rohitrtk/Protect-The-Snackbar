@@ -45,12 +45,20 @@ public partial class Player_Handler : MonoBehaviour
     [SerializeField] private Transform _playerWeapons;
 
     /// <summary>
+    /// The players current primary weapon
+    /// </summary>
+    Weapon_Abstract _primaryWeapon;
+
+    /// <summary>
     /// Use this for initialization
     /// </summary>
     protected void Start()
     {
         // Default player is not paused
         _paused = false;
+
+        // Gets the weapon abstract class from the weapon
+        _primaryWeapon = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
         _playerBody.layer = 8;
@@ -159,17 +167,19 @@ public partial class Player_Handler : MonoBehaviour
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
         // TODO: make this more efficient also need to make a bool for primary weapon
-        if (Input.GetButton("Fire1")) FireWeapon();
+        if (Input.GetButtonDown("Fire1")) FireWeapon(false);
+        else if (Input.GetButton("Fire1")) FireWeapon(true);
     }
 
     /// <summary>
-    /// Called to fire the players weapon
+    /// Called to fire the players weapon. Parameter stores whether
+    /// or not the mouse is being held down or was single clicked
     /// </summary>
-    protected void FireWeapon()
+    /// <param name="held"></param>
+    protected void FireWeapon(bool held)
     {
-        Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
-        gun.Fire();
-        print("Firing");
+        _primaryWeapon.Fire(held);
+        print(held);
     }
 }
 
