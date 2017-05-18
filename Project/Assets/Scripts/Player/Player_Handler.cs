@@ -8,26 +8,40 @@ using UnityEngine;
 /// </summary>
 public partial class Player_Handler : MonoBehaviour
 {
-    // The speed at which the player moves at
+    /// <summary>
+    /// The speed at which the player moves at
+    /// </summary>
     [SerializeField] private float _moveSpeed;
 
-    // Speed is divided by this, basically makes the input values
-    // easier to work with (i.e _moveSpeed = 1 as opposed to _moveSpeed = 0.27)
+    /// <summary>
+    /// Speed is divided by this, basically makes the input values
+    /// easier to work with (i.e _moveSpeed = 1 as opposed to _moveSpeed = 0.27)
+    /// </summary>
     [SerializeField] private float _moveSpeedScale;
 
-    // Players camera
+    /// <summary>
+    /// Players camera
+    /// </summary>
     [SerializeField] private Camera _mainCamera;
 
-    // Cameras offset
+    /// <summary>
+    /// Cameras offset
+    /// </summary>
     [SerializeField] private Vector3 _cameraOffset;
 
-    //Object used as the visual repersentation of the player
+    /// <summary>
+    /// Object used as the visual repersentation of the player
+    /// </summary>
     [SerializeField] private GameObject _playerBody;
 
-    // Is this player paused?
+    /// <summary>
+    /// Is this player paused?
+    /// </summary>
     private bool _paused;
 
-    // PlayerWeapons gameobject (Holds reference to the attached weapons)
+    /// <summary>
+    /// PlayerWeapons gameobject (Holds reference to the attached weapons)
+    /// </summary>
     [SerializeField] private Transform _playerWeapons;
 
     /// <summary>
@@ -56,6 +70,9 @@ public partial class Player_Handler : MonoBehaviour
         // Moves the players camera
         MovePlayerCamera();
 
+        // Check for key presses and mouse clicks
+        CheckKeysAndMouse();
+
         // Sets the cursor lock state based on if the player is paused or not
         Cursor.lockState = (_paused) ? CursorLockMode.None : CursorLockMode.Locked;
     }
@@ -66,16 +83,22 @@ public partial class Player_Handler : MonoBehaviour
     protected void Move()
     {
         // Stores the horizontal movement of the player
-        var horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
+        float horizontalMove = Input.GetAxis("Horizontal") * (_moveSpeedScale / _moveSpeed);
 
         // Stores the vertical movement of the player
-        var verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
+        float verticalMove = Input.GetAxis("Vertical") * (_moveSpeedScale / _moveSpeed);
 
         // Stores the horizontal and vertical movement as a vector
         Vector3 move = new Vector3(horizontalMove, 0.0f, verticalMove);
 
-        // Move the player based on the move vector relative to its self
-        transform.Translate(move, Space.Self);
+        // Sets the direction of the move vector to that of the players camera direction
+        move = _mainCamera.transform.TransformDirection(move);
+
+        // Stops players y from increasing
+        move.y = 0f;
+
+        // Move the player based on the move vector relative to the world
+        transform.Translate(move , Space.World);
     }
 
     /// <summary>
@@ -85,10 +108,10 @@ public partial class Player_Handler : MonoBehaviour
     protected void Rotate()
     {
         // Rotation along the x axis
-        var xRot = Input.GetAxis("Mouse X");
+        float xRot = Input.GetAxis("Mouse X");
 
         // Rotation along the y axis
-        var yRot = Input.GetAxis("Mouse Y") * -1;
+        float yRot = Input.GetAxis("Mouse Y") * -1;
 
         // Get the rotation as a Vector3 and add the mouse rotations to it
         Vector3 t = transform.localEulerAngles;
@@ -111,7 +134,7 @@ public partial class Player_Handler : MonoBehaviour
     /// <summary>
     /// Handles the moving and rotation of the players camera
     /// </summary>
-    private void MovePlayerCamera()
+    protected void MovePlayerCamera()
     {
         // Sets the cameras position to the players position
         _mainCamera.transform.position = transform.position;
@@ -126,7 +149,7 @@ public partial class Player_Handler : MonoBehaviour
     /// <summary>
     /// Checks for player key presses and mouse presses that aren't related to movement
     /// </summary>
-    private void CheckKeysAndMouse()
+    protected void CheckKeysAndMouse()
     {
         //If the user hits escape, give them their cursor back
         if (Input.GetKeyDown("escape")) _paused = !_paused;
@@ -136,11 +159,17 @@ public partial class Player_Handler : MonoBehaviour
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
         // TODO: make this more efficient also need to make a bool for primary weapon
-        if (Input.GetButton("Fire1"))
-        {
-            Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
-            gun.Fire();
-        }
+        if (Input.GetButton("Fire1")) FireWeapon();
+    }
+
+    /// <summary>
+    /// Called to fire the players weapon
+    /// </summary>
+    protected void FireWeapon()
+    {
+        Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
+        gun.Fire();
+        print("Firing");
     }
 }
 
