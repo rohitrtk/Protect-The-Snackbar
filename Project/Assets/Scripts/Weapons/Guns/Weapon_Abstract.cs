@@ -11,8 +11,11 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private float reloadTime;
     [SerializeField] private float waitTime;
     [SerializeField] private bool hasScope;
-    [SerializeField] private Transform _bulletSpawn;
-    [SerializeField] private Camera _playerCam;
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private Camera playerCam;
+    [SerializeField] private float damage = 15f;
+    private bool onCooldown;
+    private Timer coolDownTimer;
     #endregion
 
     #region Abstract Methods
@@ -29,18 +32,19 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         RaycastHit hitInfo;
         Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); //Sets the middle of the players view as our start point
 
-        Debug.DrawRay(rayStart, PlayerCam.transform.forward*5000f, Color.red);
+        Debug.DrawRay(rayStart, PlayerCam.transform.forward * 5000f, Color.red);
 
         if (Physics.Raycast(rayStart, PlayerCam.transform.forward, out hitInfo, 5000f))
         {
             Transform go = hitInfo.transform;
             //print(hitInfo.transform.name);
 
-            if(go.tag.Equals("Enemy"))
+            if (go.tag.Equals("Enemy"))
             {
-                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, 2f);
+                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, damage);
             }
         }
+        
     }
     #endregion
 
@@ -130,7 +134,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     {
         get
         {
-            return _playerCam;
+            return playerCam;
         }
     }
     #endregion
