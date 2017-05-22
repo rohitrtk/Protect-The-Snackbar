@@ -77,7 +77,7 @@ public class Network_Enemy : AbstractNetworkSync
         if (photonView.isMine) // Double checking this is the owner incase the RPC is sent to the wrong client
         {
             _enemy.Health -= dmg;
-            print("Health: " + _enemy.Health);
+            //print("Health: " + _enemy.Health);
 
             if (_enemy.Health <= 0)
             {

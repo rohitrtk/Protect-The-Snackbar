@@ -169,7 +169,6 @@ public partial class Player_Handler : MonoBehaviour
     {
         Weapon_Abstract gun = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
         gun.Fire();
-        print("Firing");
     }
 }
 
