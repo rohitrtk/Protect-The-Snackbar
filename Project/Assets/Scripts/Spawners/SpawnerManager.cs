@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour {
 
+    public void Spawn(string prefabName, Transform spawn) //REMEMBER TO SUMMARY THIS LATER
+    {
+        PhotonNetwork.Instantiate(prefabName, spawn.position, spawn.rotation, 0);
+    }
 
-    public void Spawn() //REMEMBER TO SUMMARY THIS LATER
+    void Start()
     {
         
     }
 
+    void Update()
+    {
+
+    }
 
 }

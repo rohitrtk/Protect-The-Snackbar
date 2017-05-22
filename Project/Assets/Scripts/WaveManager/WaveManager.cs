@@ -20,43 +20,72 @@ public class WaveManager : MonoBehaviour { //Maybe have a master controller that
 
     [SerializeField] private Text _waveText;
 
+    /// <summary>
+    /// Game object containing all the enemy spawners
+    /// </summary>
+    [SerializeField] private GameObject _enemySpawnLocations;
+
+    /// <summary>
+    /// Used for simple counting down the line
+    /// </summary>
+    private int counter;
+
+    Transform[] _spawnLocations;
+
     private Timer time;
 
 	// Use this for initialization
 	void Start () { //TODO: Change this for networking
-        _spawner = GetComponent <SpawnerManager> ();
+        _spawnLocations = _enemySpawnLocations.GetComponentsInChildren<Transform>();
         _waveText.text = "Wave " + _wave;
+
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (PhotonNetwork.isMasterClient)//If I am the host aka the only one who should be using this script
         {
             switch (_wave)//For every wave
             {
                 case 0: //Warmup, 10 second countdown
                     #region Literally just a countdown
-                    if (time == null)//No timer has been made
+                    if(time == null)//No timer set yet
                     {
-                        MakeTimer(10f, "Warmup Timer"); //Not a constructor, its a private method that parents a game object.
+                        time = new Timer(10);
                     }
-                    else //Timer has already been made
+                    else
                     {
-                        if (time._finished)//Timer is done
+                        if (time.Complete())
                         {
-                            Destroy(time);//Clear the time
-                            WaveUp();
+                            time = null; //Empty it for possible later use
+                            NetWaveUp();
                         }
                     }
-
                     break;
                 #endregion
 
-                case 1: //Round 1, 10 basic enemies, 4 second spawn interval, spawners(1-2)
+                case 1: //Round 1, 10 basic enemies, 2 second spawn interval
                     #region Wave 1
+                    if(time == null) //If no timer exists
+                    {
+                        time = new Timer(2);//Make a timer countdown from 2
+                        counter++;
+                    }
+                    else
+                    {
+                        if (time.Complete())//When the timer has finished counting
+                        {
+                            int rand = Random.Range(0, _spawnLocations.Length); // Random int.
+                            _spawner.Spawn("BasicEnemy", _spawnLocations[rand]);// Spawn a basic enemy at a random spawner();
+                            time = null; //Reset the timer
+                        }
+                    }
 
-
-
+                    if(counter > 10) //If we have the desired amount of enemies spawned
+                    {
+                        counter = 0; //Reset counter for other waves
+                        NetWaveUp(); //Go to the next wave
+                    }
                     #endregion
                     break;
 
@@ -66,32 +95,27 @@ public class WaveManager : MonoBehaviour { //Maybe have a master controller that
             }
 
 
-
+            
         }
 	}
 
 
 
     /// <summary>
-    /// TEMP. Sets the wave up by one and sets the HUD's info
+    /// Sets the wave up by one and sets the HUD's info -- MAY BE REPLACED LATER
     /// </summary>
-    private void WaveUp()
+    [PunRPC] private void WaveUp()
     {
         _wave++; //Goto the next wave
         _waveText.text = "Wave " + _wave; //Sets the HUD's 'Wave: ' string
     }
 
     /// <summary>
-    /// Makes a timer.
-    ///  For some reason I cant make a constructor on components?? so i have to make the variables public and set em manually with this method.
+    /// Tells everyone in the room to increase the wave number by one
     /// </summary>
-    /// <param name="duration"></param>
-    /// <param name="name"></param>
-    private void MakeTimer(float duration, string name = "NOT SET")
+    private void NetWaveUp()
     {
-        time = gameObject.AddComponent<Timer>(); //Make a timer.
-        time._timeLeft = duration; //Time in seconds
-        time._name = name; //Set a name
+        GetComponent<PhotonView>().RPC("WaveUp", PhotonTargets.All); //Tell the network to go up a wave
     }
 
     /*
@@ -100,7 +124,7 @@ public class WaveManager : MonoBehaviour { //Maybe have a master controller that
     -------------------------
 
      -Maybe use a PUNRPC to tell everyone to increment the round
-     -
+     -Add a cooldown between rounds for the user to chill out
      -
      -
 

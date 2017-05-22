@@ -29,17 +29,21 @@ public partial class Enemy_Basic : Enemy_Abstract
             Dead = true;
         }
 
+        GameObject closestPlayer = null;
+
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("MultiPlayer"))
+        {
+            if (closestPlayer == null) closestPlayer = player;
+            if(Vector3.Distance(transform.position, closestPlayer.transform.position) < Vector3.Distance(transform.position, player.transform.position))
+            {
+                closestPlayer = player;
+            }
+        }
+
+        Follow(closestPlayer);
+
         // Inverted if statement to reduce nesting
         if (!Dead) return;
 
-        // Keep reseting health so that we dont get a stack overflow from shooting it too many times
-        Health = 0;
-
-        //Make a new material (So it doesnt make all red materials black) and apply it to the dead enemy
-        Color black = new Color(0, 0, 0, 1);
-        MeshRenderer mesh = _model.GetComponent<MeshRenderer>();
-        Material blackMaterial = new Material(Shader.Find("Standard"));
-        blackMaterial.color = black;
-        mesh.material = blackMaterial;
     }
 }

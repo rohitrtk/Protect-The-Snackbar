@@ -1,39 +1,59 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Class used for making timers that count down from a specifed time
-/// </summary>
-public class Timer : MonoBehaviour{
+public class Timer {
 
     /// <summary>
-    /// Time left on the timer in seconds
+    /// Total duration of the timer in seconds
     /// </summary>
-    public float _timeLeft; // Doesnt need to be serialized but it will make debugging easier at a glance mid game
+    private float _maxTime;
     /// <summary>
-    /// Debugging info just a note to leave on the timer
+    /// How long in seconds the timer has been active for
     /// </summary>
-    public string _name; // Doesnt need to be serialized but it will make debugging easier at a glance mid game
-    
+    private float _currTime;
     /// <summary>
-    /// If the timer has finished
+    /// Time when the constructor was called
     /// </summary>
-    public bool _finished;
+    private long _then;
 
-    void Start()
+
+
+    public Timer(float maxTime)
     {
-        _finished = false;
+        _maxTime = maxTime;
+        _then = DateTime.Now.Ticks / TimeSpan.TicksPerSecond; //Set the current time
     }
 
-	void Update () {
-		if(_timeLeft > 0) //If a timer is running
+
+    public bool Complete()
+    {
+
+        long _now = DateTime.Now.Ticks / TimeSpan.TicksPerSecond; //Set the current time
+        if (_now - _then >= _maxTime) return true;//If the timer has gone over its time return true
+        return false;//If not return false;
+    }
+
+
+
+
+
+
+    public float MaxTime
+    {
+        get
         {
-            _timeLeft -= Time.deltaTime;
+            return _maxTime;
         }
-        else
+    }
+
+    public float CurrentTime
+    {
+        get
         {
-            _finished = true;
+            long _now = DateTime.Now.Ticks / TimeSpan.TicksPerSecond;
+            return _now - _then;
         }
-	}
+    }
 }
