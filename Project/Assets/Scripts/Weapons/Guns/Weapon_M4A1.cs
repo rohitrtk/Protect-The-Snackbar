@@ -25,22 +25,8 @@ public class Weapon_M4A1 : Weapon_Abstract
     /// <summary>
     /// Called to fire weapon; calls the super method
     /// </summary>
-    public override void Fire(bool held)
+    public override void Fire()
     {
-        base.Fire(held);
-        PlaySound(held);
-    }
-
-    /// <summary>
-    /// Called to play this weapons sound
-    /// </summary>
-    protected override void PlaySound(bool held)
-    {
-        if(!held)
-        {
-            
-            
-            return;
-        }
+        base.Fire();
     }
 }

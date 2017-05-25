@@ -13,10 +13,10 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private float waitTime;
     [SerializeField] private bool hasScope;
 
-    [SerializeField] private AudioSource[] firingSounds;
-
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
+
+    [SerializeField] private Weapon_Sounds _weaponSound;
 
     /// <summary>
     /// Can the gun shoot right now?
@@ -27,14 +27,13 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
-    protected abstract void PlaySound(bool held);
     #endregion
 
     #region Methods
     /// <summary>
     /// Handles the player's firing logic and setting raycasts.
     /// </summary>
-    public virtual void Fire(bool held)
+    public virtual void Fire()
     {
         if(!_canShoot)
         {
@@ -52,13 +51,13 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         if (Physics.Raycast(rayStart, PlayerCam.transform.forward, out hitInfo, 5000f))
         {
             Transform go = hitInfo.transform;
-            //print(hitInfo.transform.name);
 
             if (go.tag.Equals("Enemy"))
             {
                 go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, 2f);
             }
         }
+        _weaponSound.PlayShotSound();
 
         _canShoot = false;
     }
@@ -163,19 +162,6 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         get
         {
             return _playerCam;
-        }
-    }
-
-    public AudioSource[] FiringSounds
-    {
-        get
-        {
-            return firingSounds;
-        }
-
-        set
-        {
-            firingSounds = value;
         }
     }
     #endregion

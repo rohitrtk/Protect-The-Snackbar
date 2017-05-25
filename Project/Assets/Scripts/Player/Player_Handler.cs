@@ -167,19 +167,15 @@ public partial class Player_Handler : MonoBehaviour
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
         // TODO: make this more efficient also need to make a bool for primary weapon
-        if (Input.GetButtonDown("Fire1")) FireWeapon(false);
-        else if (Input.GetButton("Fire1")) FireWeapon(true);
+        if (Input.GetButton("Fire1")) FireWeapon();
     }
 
     /// <summary>
-    /// Called to fire the players weapon. Parameter stores whether
-    /// or not the mouse is being held down or was single clicked
+    /// Called to fire the players weapon.
     /// </summary>
-    /// <param name="held"></param>
-    protected void FireWeapon(bool held)
+    protected void FireWeapon()
     {
-        _primaryWeapon.Fire(held);
-        print(held);
+        _primaryWeapon.Fire();
     }
 }
 
