@@ -12,7 +12,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private float reloadTime;
     [SerializeField] private float waitTime;
     [SerializeField] private bool hasScope;
-
+    [SerializeField] private float damage = 15f;
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
     [SerializeField] private Weapon_Sounds _weaponSound;
@@ -158,7 +158,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     {
         get
         {
-            return playerCam;
+            return _playerCam;
         }
     }
     #endregion
