@@ -15,13 +15,10 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
 
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
-
     [SerializeField] private Weapon_Sounds _weaponSound;
-
-    /// <summary>
-    /// Can the gun shoot right now?
-    /// </summary>
     [SerializeField] private bool _canShoot = true;
+    private bool onCooldown;
+    private Timer coolDownTimer;
     #endregion
 
     #region Abstract Methods
@@ -54,7 +51,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
 
             if (go.tag.Equals("Enemy"))
             {
-                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, 2f);
+                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, damage);
             }
         }
         _weaponSound.PlayShotSound();
@@ -161,7 +158,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     {
         get
         {
-            return _playerCam;
+            return playerCam;
         }
     }
     #endregion

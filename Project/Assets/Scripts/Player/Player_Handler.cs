@@ -176,6 +176,7 @@ public partial class Player_Handler : MonoBehaviour
     protected void FireWeapon()
     {
         _primaryWeapon.Fire();
+        print("Firing");
     }
 }
 
