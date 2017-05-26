@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
     /// <summary>
     /// ref to SpawnerManager script
     /// </summary>
-    [SerializeField] private SpawnerManager _spawner;
+    [SerializeField] private EnemySpawnerBasic _spawner;
 
     [SerializeField] private Text _waveText;
 
@@ -80,7 +80,7 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
                         if (time.Complete())//When the timer has finished counting
                         {
                             int rand = Random.Range(0, _spawnLocations.Length); // Random int.
-                            _spawner.Spawn("BasicEnemy", _spawnLocations[rand]);// Spawn a basic enemy at a random spawner();
+                            Spawn("BasicEnemy", _spawnLocations[rand]);// Spawn a basic enemy at a random spawner();
                             time = null; //Reset the timer
                         }
                     }
@@ -112,6 +112,11 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
     private void NetWaveUp()
     {
         GetComponent<PhotonView>().RPC("WaveUp", PhotonTargets.All); //Tell the network to go up a wave
+    }
+
+    public void Spawn(string prefabName, Transform spawn) //REMEMBER TO SUMMARY THIS LATER
+    {
+        PhotonNetwork.Instantiate(prefabName, spawn.position, spawn.rotation, 0);
     }
 
     /*

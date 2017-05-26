@@ -16,4 +16,9 @@ public class EnemySpawnerBasic : MonoBehaviour
 
     }
 
+    public void Spawn(string prefabName, Transform spawn) //REMEMBER TO SUMMARY THIS LATER
+    {
+        PhotonNetwork.Instantiate(prefabName, spawn.position, spawn.rotation, 0);
+    }
+
 }

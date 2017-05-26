@@ -18,6 +18,7 @@ public class Weapon_Sounds : MonoBehaviour
     public void PlayShotSound()
     {
         int i = Random.Range(0, _sounds.Length);
+
         AudioSource.PlayClipAtPoint(_sounds[i], _transform.position, 0.3f);
     }
 }
