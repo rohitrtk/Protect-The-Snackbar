@@ -175,8 +175,7 @@ public partial class Player_Handler : MonoBehaviour
     /// </summary>
     protected void FireWeapon()
     {
-        _primaryWeapon.Fire();
-        print("Firing");
+        _primaryWeapon.AttemptToFire();
     }
 }
 

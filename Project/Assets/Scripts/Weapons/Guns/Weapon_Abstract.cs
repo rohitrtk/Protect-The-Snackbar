@@ -10,15 +10,15 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private int numberOfBullets;
     [SerializeField] private int numberOfBulletsInGun;
     [SerializeField] private float reloadTime;
-    [SerializeField] private float waitTime;
+    [SerializeField] private float _attackTime;
     [SerializeField] private bool hasScope;
     [SerializeField] private float damage = 15f;
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
     [SerializeField] private Weapon_Sounds _weaponSound;
-    [SerializeField] private bool _canShoot = true;
-    private bool onCooldown;
-    private Timer coolDownTimer;
+
+    private float waitTime = 0f;
+
     #endregion
 
     #region Abstract Methods
@@ -32,13 +32,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     /// </summary>
     public virtual void Fire()
     {
-        if(!_canShoot)
-        {
-            StartCoroutine(Wait(WaitTime));
-            return;
-        }
-
-        // Fire Code
+        waitTime = Time.time + _attackTime;
 
         RaycastHit hitInfo;
         Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); //Sets the middle of the players view as our start point
@@ -55,20 +49,24 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
             }
         }
         _weaponSound.PlayShotSound();
+    }
 
-        _canShoot = false;
+    public virtual void AttemptToFire()
+    {
+        print("AttemptToFire Called");
+        if (Time.time > waitTime && Time.timeScale > 0) Fire();
     }
 
     /// <summary>
     /// Will wait x amount of seconds before setting _canShoot to
-    /// true where x is the param waitTime in seconds
+    /// true where x is the param attackTime in seconds
     /// </summary>
-    /// <param name="waitTime"></param>
+    /// <param name="attackTime"></param>
     /// <returns></returns>
-    protected virtual IEnumerator Wait(float waitTime)
+    protected virtual IEnumerator Wait(float attackTime)
     {
-        yield return new WaitForSeconds(waitTime);
-        _canShoot = true;
+        yield return new WaitForSecondsRealtime(attackTime);
+        print(attackTime);
     }
     #endregion
 
@@ -138,16 +136,16 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     /// <summary>
     /// Time between shots firing
     /// </summary>
-    protected float WaitTime
+    protected float AttackTime
     {
         get
         {
-            return waitTime;
+            return _attackTime;
         }
 
         set
         {
-            waitTime = value;
+            _attackTime = value;
         }
     }
 
