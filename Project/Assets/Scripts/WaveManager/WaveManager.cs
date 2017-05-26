@@ -6,7 +6,8 @@ using UnityEngine.UI;
 /// <summary>
 /// Handels spawning waves, pickup spawns, enemy difficulty by wave. May get merged to a bigger picture gameController
 /// </summary>
-public class WaveManager : MonoBehaviour { //Maybe have a master controller that turns this script off if not host
+public class WaveManager : MonoBehaviour    //Maybe have a master controller that turns this script off if not host
+{
 
     /// <summary>
     /// Current round
@@ -34,15 +35,18 @@ public class WaveManager : MonoBehaviour { //Maybe have a master controller that
 
     private Timer time;
 
-	// Use this for initialization
-	void Start () { //TODO: Change this for networking
+    // Use this for initialization
+    //TODO: Change this for networking
+    void Start ()
+    { 
         _spawnLocations = _enemySpawnLocations.GetComponentsInChildren<Transform>();
         _waveText.text = "Wave " + _wave;
 
     }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate ()
+    {
         if (PhotonNetwork.isMasterClient)//If I am the host aka the only one who should be using this script
         {
             switch (_wave)//For every wave
@@ -88,23 +92,15 @@ public class WaveManager : MonoBehaviour { //Maybe have a master controller that
                     }
                     #endregion
                     break;
-
-
-
-
             }
-
-
-            
         }
 	}
-
-
 
     /// <summary>
     /// Sets the wave up by one and sets the HUD's info -- MAY BE REPLACED LATER
     /// </summary>
-    [PunRPC] private void WaveUp()
+    [PunRPC]
+    private void WaveUp()
     {
         _wave++; //Goto the next wave
         _waveText.text = "Wave " + _wave; //Sets the HUD's 'Wave: ' string
@@ -127,7 +123,5 @@ public class WaveManager : MonoBehaviour { //Maybe have a master controller that
      -Add a cooldown between rounds for the user to chill out
      -
      -
-
-
     */
 }

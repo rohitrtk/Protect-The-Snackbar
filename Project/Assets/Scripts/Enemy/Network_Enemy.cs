@@ -38,7 +38,6 @@ public class Network_Enemy : AbstractNetworkSync
     /// </summary>
     protected override void Update()
     {
-
         //If I am NOT the host/owner of enemy, set its position on my client to a mix of what I think it is and what the server thinks it is
         if (!photonView.isMine)
         {
@@ -49,8 +48,6 @@ public class Network_Enemy : AbstractNetworkSync
 
     protected override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
-
         // Are we reading or writing to the stream?
         if (stream.isWriting) // HOST
         {
@@ -88,7 +85,5 @@ public class Network_Enemy : AbstractNetworkSync
         {
             Debug.LogError("You tried to set damage to an object you dont own! Did you make sure the RPC was only sent to the master? ");
         }
-
-        
     }
 }

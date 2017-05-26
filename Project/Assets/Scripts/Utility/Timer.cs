@@ -18,27 +18,18 @@ public class Timer {
     /// </summary>
     private long _then;
 
-
-
     public Timer(float maxTime)
     {
         _maxTime = maxTime;
         _then = DateTime.Now.Ticks / TimeSpan.TicksPerSecond; //Set the current time
     }
 
-
     public bool Complete()
     {
-
         long _now = DateTime.Now.Ticks / TimeSpan.TicksPerSecond; //Set the current time
         if (_now - _then >= _maxTime) return true;//If the timer has gone over its time return true
         return false;//If not return false;
     }
-
-
-
-
-
 
     public float MaxTime
     {

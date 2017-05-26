@@ -17,6 +17,9 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private Camera _playerCam;
     [SerializeField] private Weapon_Sounds _weaponSound;
 
+    /// <summary>
+    /// The time to wait before the next gunshot is fired
+    /// </summary>
     private float waitTime = 0f;
 
     #endregion
@@ -35,7 +38,9 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         waitTime = Time.time + _attackTime;
 
         RaycastHit hitInfo;
-        Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); //Sets the middle of the players view as our start point
+
+        // Sets the middle of the players view as our start point
+        Vector3 rayStart = PlayerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)); 
 
         Debug.DrawRay(rayStart, PlayerCam.transform.forward * 5000f, Color.red);
 
@@ -48,25 +53,17 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
                 go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, damage);
             }
         }
+
+        // Plays the weapon sound
         _weaponSound.PlayShotSound();
     }
 
+    /// <summary>
+    /// Calls the Fire method when possible based on time
+    /// </summary>
     public virtual void AttemptToFire()
     {
-        print("AttemptToFire Called");
         if (Time.time > waitTime && Time.timeScale > 0) Fire();
-    }
-
-    /// <summary>
-    /// Will wait x amount of seconds before setting _canShoot to
-    /// true where x is the param attackTime in seconds
-    /// </summary>
-    /// <param name="attackTime"></param>
-    /// <returns></returns>
-    protected virtual IEnumerator Wait(float attackTime)
-    {
-        yield return new WaitForSecondsRealtime(attackTime);
-        print(attackTime);
     }
     #endregion
 
