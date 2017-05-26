@@ -13,6 +13,7 @@ public class Weapon_M4A1 : Weapon_Abstract
     /// </summary>
     protected override void Start()
     {
+        
     }
 
     /// <summary>

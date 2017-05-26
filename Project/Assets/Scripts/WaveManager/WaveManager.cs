@@ -50,7 +50,7 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         if (PhotonNetwork.isMasterClient)//If I am the host aka the only one who should be using this script
         {
             switch (_wave)//For every wave
-            {
+            {   
                 case 0: //Warmup, 10 second countdown
                     #region Literally just a countdown
                     if(time == null)//No timer set yet
@@ -68,7 +68,7 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
                     break;
                 #endregion
 
-                case 1: //Round 1, 10 basic enemies, 2 second spawn interval
+                default: // Will work for all rounds, based spawn of a math function
                     #region Wave 1
                     if(time == null) //If no timer exists
                     {
@@ -85,8 +85,10 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
                         }
                     }
 
-                    if(counter > 10) //If we have the desired amount of enemies spawned
+                    // TODO: Need to make it so the counter only goes up when all the enemies are dead
+                    if(counter > WaveFunction.GetEnemiesForRound(_wave)) //If we have the desired amount of enemies spawned
                     {
+                        print("Desired number of enemies has been reached!");
                         counter = 0; //Reset counter for other waves
                         NetWaveUp(); //Go to the next wave
                     }
@@ -129,4 +131,12 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
      -
      -
     */
+}
+
+public struct WaveFunction
+{
+    public static int GetEnemiesForRound(int round)
+    {
+        return Mathf.RoundToInt(Mathf.Pow(round, 2) + 10);
+    }
 }

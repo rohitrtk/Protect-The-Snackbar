@@ -16,6 +16,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
     [SerializeField] private Weapon_Sounds _weaponSound;
+    [SerializeField] private ParticleSystem _muzzleFlash;
 
     /// <summary>
     /// The time to wait before the next gunshot is fired
@@ -53,7 +54,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
                 go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, damage);
             }
         }
-
+        _muzzleFlash.Play();
         // Plays the weapon sound
         _weaponSound.PlayShotSound();
     }
@@ -154,6 +155,17 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         get
         {
             return _playerCam;
+        }
+    }
+
+    /// <summary>
+    /// Returns the muzzle flash particle system for the gun
+    /// </summary>
+    protected ParticleSystem MuzzleFlash
+    {
+        get
+        {
+            return _muzzleFlash;
         }
     }
     #endregion

@@ -2,10 +2,10 @@ Mono path[0] = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/
 Mono path[1] = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Mono'
 Mono config path = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Mono/etc'
 PlayerConnection initialized from D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55053
-Multi-casting "[IP] 10.98.100.185 [Port] 55053 [Flags] 2 [Guid] 2718840010 [EditorId] 2153608827 [Version] 1048832 [Id] WindowsPlayer(This-Laptop) [Debug] 0" to [225.0.0.222:54997]...
-Started listening to [0.0.0.0:55053]
-PlayerConnection already initialized - listening to [0.0.0.0:55053]
+PlayerConnection initialized network socket : 0.0.0.0 55050
+Multi-casting "[IP] 10.98.100.185 [Port] 55050 [Flags] 2 [Guid] 2544249269 [EditorId] 3248004675 [Version] 1048832 [Id] WindowsPlayer(This-Laptop) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55050]
+PlayerConnection already initialized - listening to [0.0.0.0:55050]
 Player data archive not found at `D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/data.unity3d`, using local filesystemInitialize engine version: 5.6.0f3 (497a0f351392)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -29,16 +29,16 @@ Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Da
 Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
 Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll (this message is harmless)
 Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
-- Completed reload, in  0.236 seconds
+- Completed reload, in  0.027 seconds
 Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 2.577776 ms
+UnloadTime: 2.571850 ms
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 44ec -> priority: 1 
-  Thread -> id: 45d4 -> priority: 1 
-  Thread -> id: 4344 -> priority: 1 
-  Thread -> id: 4684 -> priority: 1 
+  Thread -> id: 5bc -> priority: 1 
+  Thread -> id: 734 -> priority: 1 
+  Thread -> id: 1644 -> priority: 1 
+  Thread -> id: 1878 -> priority: 1 
