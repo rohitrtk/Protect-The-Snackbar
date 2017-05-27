@@ -107,6 +107,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     // TODO: Add a reload animation and set the reloadTime equal to the animation time
     protected virtual IEnumerator Reload()
     {
+        print("Reloading!");
         _reloading = true;
 
         yield return new WaitForSecondsRealtime(reloadTime);
@@ -122,7 +123,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     /// </summary>
     public virtual void AttemptReload()
     {
-        if (NumberOfBulletsInGun == NumberOfBullets) return;
+        if ((NumberOfBulletsInGun == NumberOfBullets) || _reloading) return;
 
         StartCoroutine(Reload());
     }

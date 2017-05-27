@@ -172,7 +172,7 @@ public partial class Player_Handler : MonoBehaviour
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
         // Using an else if to optimize slighty
-        if (Input.GetKeyDown(KeyCode.R) && !_primaryWeapon.Reloading) _primaryWeapon.AttemptReload();
+        if (Input.GetKeyDown(KeyCode.R)) _primaryWeapon.AttemptReload();
         else if (Input.GetButton("Fire1")) FireWeapon();
     }
 

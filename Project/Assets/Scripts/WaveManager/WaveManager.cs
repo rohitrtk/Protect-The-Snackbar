@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Handels spawning waves, pickup spawns, enemy difficulty by wave. May get merged to a bigger picture gameController
+/// Handles spawning waves, pickup spawns, enemy difficulty by wave. May get merged to a bigger picture gameController
 /// </summary>
 public class WaveManager : MonoBehaviour    //Maybe have a master controller that turns this script off if not host
 {
@@ -45,50 +45,52 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
     }
 	
 	// Update is called once per frame
+    // How come using FixedUpdate instead of LateUpdate?
 	void FixedUpdate ()
     {
-        if (PhotonNetwork.isMasterClient)//If I am the host aka the only one who should be using this script
+        // If I am the host aka the only one who should be using this script
+        if (PhotonNetwork.isMasterClient)
         {
+            // TODO: Replace timer spawn system with a coroutine system, also can replace the switch 
+            // for an if statement since spawning is now based off of a math function instead of static numbers
             switch (_wave)//For every wave
-            {   
-                case 0: //Warmup, 10 second countdown
+            {
+                // Warmup, 10 second countdown
+                case 0:
                     #region Literally just a countdown
-                    if(time == null)//No timer set yet
+                    if(time == null)
                     {
                         time = new Timer(10);
+                        return;
                     }
-                    else
-                    {
-                        if (time.Complete())
-                        {
-                            time = null; //Empty it for possible later use
-                            NetWaveUp();
-                        }
-                    }
+
+                    if (!time.Complete()) return;
+                    
+                    NetWaveUp();
                     break;
                 #endregion
-
-                default: // Will work for all rounds, based spawn of a math function
-                    #region Wave 1
-                    if(time == null) //If no timer exists
+                
+                default:
+                    // Will work for all rounds, based spawn off of a math function (See the struct at the bottom of the script)
+                    #region Wave X
+                    if (time == null) //If no timer exists
                     {
                         time = new Timer(2);//Make a timer countdown from 2
                         counter++;
+                        return;
                     }
-                    else
+
+                    if (time.Complete())//When the timer has finished counting
                     {
-                        if (time.Complete())//When the timer has finished counting
-                        {
-                            int rand = Random.Range(0, _spawnLocations.Length); // Random int.
-                            Spawn("BasicEnemy", _spawnLocations[rand]);// Spawn a basic enemy at a random spawner();
-                            time = null; //Reset the timer
-                        }
+                        int rand = Random.Range(0, _spawnLocations.Length); // Random int.
+                        Spawn("BasicEnemy", _spawnLocations[rand]);// Spawn a basic enemy at a random spawner();
+                        time = null; //Reset the timer
                     }
 
                     // TODO: Need to make it so the counter only goes up when all the enemies are dead
-                    if(counter > WaveFunction.GetEnemiesForRound(_wave)) //If we have the desired amount of enemies spawned
+                    if (counter > WaveFunctions.GetEnemiesForRound(_wave)) //If we have the desired amount of enemies spawned
                     {
-                        print("Desired number of enemies has been reached!");
+                        print("Wave " + _wave + " completed.\nStarting next wave.");
                         counter = 0; //Reset counter for other waves
                         NetWaveUp(); //Go to the next wave
                     }
@@ -133,7 +135,10 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
     */
 }
 
-public struct WaveFunction
+/// <summary>
+/// Contains functions for wave spawning
+/// </summary>
+public struct WaveFunctions
 {
     public static int GetEnemiesForRound(int round)
     {
