@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 /// <summary>
 /// Abstract class for weapons
@@ -7,20 +9,32 @@ using UnityEngine;
 public abstract partial class Weapon_Abstract : MonoBehaviour
 {
     #region Variables
+    // Reload variables
+    // Number of bullets the gun can hold
     [SerializeField] private int numberOfBullets;
+
+    // The number of bullets currently in the gun
     [SerializeField] private int numberOfBulletsInGun;
     [SerializeField] private float reloadTime;
+    private bool _reloading;
+
+    // Weapon damage default at 10 (Override in actual weapon class)
+    [SerializeField] private float _damage = 10f;
+
+    // Time between shots for this gun
     [SerializeField] private float _attackTime;
+
     [SerializeField] private bool hasScope;
-    [SerializeField] private float damage = 15f;
-    [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private Camera _playerCam;
     [SerializeField] private Weapon_Sounds _weaponSound;
     [SerializeField] private ParticleSystem _muzzleFlash;
 
-    /// <summary>
-    /// The time to wait before the next gunshot is fired
-    /// </summary>
+    private bool weaponInHand = false;
+
+    // Reference to the canvas text object which will display ammmo
+    [SerializeField] private Text _gunAmmoText;
+
+    // The time to wait before the next gunshot is fired
     private float waitTime = 0f;
 
     #endregion
@@ -28,14 +42,17 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     #region Abstract Methods
     protected abstract void Start();
     protected abstract void Update();
+    protected abstract void OnEnable();
     #endregion
 
     #region Methods
     /// <summary>
     /// Handles the player's firing logic and setting raycasts.
     /// </summary>
-    public virtual void Fire()
+    protected void Fire()
     {
+        if (_reloading) return;
+
         waitTime = Time.time + _attackTime;
 
         RaycastHit hitInfo;
@@ -51,10 +68,16 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
 
             if (go.tag.Equals("Enemy"))
             {
-                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, damage);
+                go.GetComponent<PhotonView>().RPC("TakeDamage", PhotonTargets.MasterClient, _damage);
             }
         }
+
+        numberOfBulletsInGun--;
+        UpdateGunAmmo();
+
+        // Plays the muzzle flash
         _muzzleFlash.Play();
+
         // Plays the weapon sound
         _weaponSound.PlayShotSound();
     }
@@ -64,7 +87,44 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     /// </summary>
     public virtual void AttemptToFire()
     {
-        if (Time.time > waitTime && Time.timeScale > 0) Fire();
+        if (NumberOfBulletsInGun <= 0) AttemptReload();
+        else if (Time.time > waitTime && Time.timeScale > 0 && !_reloading) Fire();
+    }
+
+    /// <summary>
+    /// Displays the ammo of the gun to text
+    /// </summary>
+    protected virtual void UpdateGunAmmo()
+    {
+        GunAmmoText.text = NumberOfBulletsInGun + "/" + NumberOfBullets;
+    }
+
+    /// <summary>
+    /// Plays the reload animation and waits for it to finish,
+    /// then updates the number of bullets in the gun
+    /// </summary>
+    /// <returns></returns>
+    // TODO: Add a reload animation and set the reloadTime equal to the animation time
+    protected virtual IEnumerator Reload()
+    {
+        _reloading = true;
+
+        yield return new WaitForSecondsRealtime(reloadTime);
+
+        NumberOfBulletsInGun = 30;
+        UpdateGunAmmo();
+
+        _reloading = false;
+    }
+
+    /// <summary>
+    /// Will be called inside the Player_Handler class to attempt a reload
+    /// </summary>
+    public virtual void AttemptReload()
+    {
+        if (NumberOfBulletsInGun == NumberOfBullets) return;
+
+        StartCoroutine(Reload());
     }
     #endregion
 
@@ -72,7 +132,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     /// <summary>
     /// The number of bullets the gun can hold (Ammo count)
     /// </summary>
-    protected int NumberOfBullets
+    public int NumberOfBullets
     {
         get
         {
@@ -87,7 +147,7 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
     /// <summary>
     /// The number of bullets currently in the gun (Current ammo count)
     /// </summary>
-    protected int NumberOfBulletsInGun
+    public int NumberOfBulletsInGun
     {
         get
         {
@@ -158,14 +218,52 @@ public abstract partial class Weapon_Abstract : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Returns the muzzle flash particle system for the gun
-    /// </summary>
-    protected ParticleSystem MuzzleFlash
+    protected float Damage
+    {
+        set
+        {
+            _damage = value;
+        }
+        get
+        {
+            return _damage;
+        }
+    }
+
+    public bool WeaponInHand
     {
         get
         {
-            return _muzzleFlash;
+            return weaponInHand;
+        }
+
+        set
+        {
+            weaponInHand = value;
+        }
+    }
+
+    protected Text GunAmmoText
+    {
+        get
+        {
+            return _gunAmmoText;
+        }
+        set
+        {
+            _gunAmmoText = value;
+        }
+    }
+
+    public bool Reloading
+    {
+        get
+        {
+            return _reloading;
+        }
+        set
+        {
+            _reloading = value;
         }
     }
     #endregion

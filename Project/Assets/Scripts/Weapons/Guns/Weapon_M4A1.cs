@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class for the M4A1
@@ -13,7 +11,12 @@ public class Weapon_M4A1 : Weapon_Abstract
     /// </summary>
     protected override void Start()
     {
-        
+        NumberOfBullets = 30;
+        NumberOfBulletsInGun = 30;
+        Damage = 20f;
+
+        GunAmmoText = GameObject.Find("Gun Ammo").GetComponent<Text>();
+        UpdateGunAmmo();
     }
 
     /// <summary>
@@ -23,11 +26,8 @@ public class Weapon_M4A1 : Weapon_Abstract
     {
     }
 
-    /// <summary>
-    /// Called to fire weapon; calls the super method
-    /// </summary>
-    public override void Fire()
+    protected override void OnEnable()
     {
-        base.Fire();
+         //WeaponInHand = true;
     }
 }

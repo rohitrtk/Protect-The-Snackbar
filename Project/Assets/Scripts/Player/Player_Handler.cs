@@ -42,7 +42,7 @@ public partial class Player_Handler : MonoBehaviour
     /// <summary>
     /// PlayerWeapons gameobject (Holds reference to the attached weapons)
     /// </summary>
-    [SerializeField] private Transform _playerWeapons;
+    [SerializeField] private Weapon_Inventory _playerWeapons;
 
     /// <summary>
     /// The players current primary weapon
@@ -57,8 +57,13 @@ public partial class Player_Handler : MonoBehaviour
         // Default player is not paused
         _paused = false;
 
-        // Gets the weapon abstract class from the weapon
-        _primaryWeapon = _playerWeapons.GetComponentInChildren<Weapon_Abstract>();
+        // Gets the weapon abstract class from the weapon inventory class attached to the player
+        foreach(Weapon_Abstract wep in _playerWeapons.WeaponsInHand)
+        {
+            if (!wep.WeaponInHand) continue;
+
+            _primaryWeapon = wep;
+        }
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
         _playerBody.layer = 8;
@@ -166,8 +171,9 @@ public partial class Player_Handler : MonoBehaviour
         // else return it to walk speed scale
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
-        // TODO: make this more efficient also need to make a bool for primary weapon
-        if (Input.GetButton("Fire1")) FireWeapon();
+        // Using an else if to optimize slighty
+        if (Input.GetKeyDown(KeyCode.R) && !_primaryWeapon.Reloading) _primaryWeapon.AttemptReload();
+        else if (Input.GetButton("Fire1")) FireWeapon();
     }
 
     /// <summary>

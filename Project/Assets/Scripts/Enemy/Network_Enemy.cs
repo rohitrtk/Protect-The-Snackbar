@@ -69,7 +69,8 @@ public class Network_Enemy : AbstractNetworkSync
     /// Makes an enemy take damage and if it gets too low it dies
     /// </summary>
     /// <param name="dmg"></param>
-    [PunRPC] public void TakeDamage(float dmg) // Host is the only one who should be running this
+    [PunRPC]
+    public void TakeDamage(float dmg) // Host is the only one who should be running this
     {
         if (photonView.isMine) // Double checking this is the owner incase the RPC is sent to the wrong client
         {
