@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -104,9 +103,26 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         GetComponent<PhotonView>().RPC("WaveUp", PhotonTargets.All); // Tell the network to go up a wave
     }
 
-    public GameObject Spawn(string prefabName, Transform spawn) // ||||||REMEMBER TO SUMMARY THIS LATER||||||
+    /// <summary>
+    /// Used to spawn a prefab of type name and at transform spawn
+    /// </summary>
+    /// <param name="prefabName"></param>
+    /// <param name="spawn"></param>
+    /// <returns></returns>
+    public GameObject Spawn(string prefabName, Transform spawn)
     {
         return PhotonNetwork.Instantiate(prefabName, spawn.position, spawn.rotation, 0);
+    }
+
+    /// <summary>
+    /// Used to spawn an Abstract Enemy of type name and at transform spawn
+    /// </summary>
+    /// <param name="spawn"></param>
+    /// <param name="prefabName"></param>
+    /// <returns></returns>
+    public Enemy_Abstract Spawn(Transform spawn, string prefabName)
+    {
+        return PhotonNetwork.Instantiate(prefabName, spawn.position, spawn.rotation, 0).GetComponent<Enemy_Abstract>();
     }
 
     /*
@@ -135,6 +151,7 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         yield return StartCoroutine(RoundPlay());
         yield return StartCoroutine(RoundWait());
 
+        // Restarts this function to continue game loop
         StartCoroutine(SpawnLoop());
     }
 
@@ -160,47 +177,50 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         NetWaveUp();
     }
 
+    /// <summary>
+    /// Responsible for spawning enemies and waits until all enemies die before ending
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator RoundPlay()
     {
         print("Round Play | " + _currentPhase);
         var numberOfEnemies = Wave.GetEnemiesForRound(_wave);
 
+        // Array of Enemy_Abstracts to store the spawned enemies
         Enemy_Abstract[] enemies = new Enemy_Abstract[numberOfEnemies];
 
+        // Counter to track enemy count
         int counter = 0;
-        
-        while(counter < numberOfEnemies)
+
+        while (counter < numberOfEnemies || !Wave.CheckEnemies(enemies))
         {
-            int rand = Random.Range(0, _spawnLocations.Length); // Random int.
-
-            // Spawn a basic enemy at a random spawner();
-            enemies[counter] = Spawn("BasicEnemy", _spawnLocations[rand]).GetComponent<Enemy_Abstract>();
-
-            yield return new WaitForSecondsRealtime(Wave.SpawnWaitTime);
-            counter++;
-        }
-
-        // TODO: Work on making the round wait for all enemies to die!
-        /*
-        counter = numberOfEnemies;
-        int numberOfNullEnemies = 0;
-        while (counter > numberOfNullEnemies)
-        {
-            foreach(var e in enemies)
+            if (counter < numberOfEnemies)
             {
-                if (e != null) break;
+                // Random int which will be used to spawn enemies at a random spawner
+                int rand = UnityEngine.Random.Range(0, _spawnLocations.Length);
 
-                counter--;
+                // Spawn a basic enemy at a random spawner
+                enemies[counter] = Spawn(_spawnLocations[rand], "BasicEnemy");
+
+                yield return new WaitForSecondsRealtime(Wave.SpawnWaitTime);
+                counter++;
+
+                // Continue to the next iteration of the loop
+                continue;
             }
 
-            if (counter == numberOfNullEnemies) break;
+            // Need this to stop infinite loop
+            yield return new WaitForSeconds(0.1f);
         }
-        */
 
         _currentPhase = Phase.Wait;
         yield return null;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator RoundPause()
     {
         yield return null;
@@ -227,8 +247,34 @@ public struct Wave
     /// </summary>
     public const int SpawnWaitTime = 1;
 
+    /// <summary>
+    /// The base number of enemies to spawn
+    /// </summary>
+    private const int _BaseNumberOfEnemies = 8;
+
+    /// <summary>
+    /// Returns the number of enemies needed for an int round
+    /// </summary>
+    /// <param name="round"></param>
+    /// <returns></returns>
     public static int GetEnemiesForRound(int round)
     {
-        return Mathf.RoundToInt(Mathf.Pow(round, 2) + 1);
+        // Return round^2 + base
+        return Mathf.RoundToInt(Mathf.Pow(round, 2) + _BaseNumberOfEnemies);
+    }
+
+    /// <summary>
+    /// Returns true if all of the enemies in an array are null
+    /// </summary>
+    /// <param name="enemies"></param>
+    /// <returns></returns>
+    public static bool CheckEnemies(Enemy_Abstract[] enemies)
+    {
+        foreach(var e in enemies)
+        {
+            if (e != null) return false;
+        }
+
+        return true;
     }
 }
