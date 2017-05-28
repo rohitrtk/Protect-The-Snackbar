@@ -50,12 +50,43 @@ public partial class Player_Handler : MonoBehaviour
     Weapon_Abstract _primaryWeapon;
 
     /// <summary>
+    /// Players rigidbody
+    /// </summary>
+    private Rigidbody _rb;
+
+    /// <summary>
+    /// Is this player jumping?
+    /// </summary>
+    private bool _isJumping;
+
+    /// <summary>
+    /// Is this player grounded?
+    /// </summary>
+    private bool _isGrounded;
+
+    /// <summary>
+    /// Is this player crouching?
+    /// </summary>
+    private bool _isCrouching;
+
+    /// <summary>
+    /// How much force will applied in the y direction when the player jumps
+    /// </summary>
+    private const float jumpForceY = 4f;
+
+    private Transform[] children;
+
+    /// <summary>
     /// Use this for initialization
     /// </summary>
     protected void Start()
     {
-        // Default player is not paused
+        // Players rigidbody component
+        _rb = GetComponent<Rigidbody>();
+
+        // Default player is not paused and is not jumping
         _paused = false;
+        _isJumping = false;
 
         // Gets the weapon abstract class from the weapon inventory class attached to the player
         foreach(Weapon_Abstract wep in _playerWeapons.WeaponsInHand)
@@ -64,6 +95,8 @@ public partial class Player_Handler : MonoBehaviour
 
             _primaryWeapon = wep;
         }
+
+        children = GetComponentsInChildren<Transform>();
 
         //Set the player's body to the "Player" layer so that its own camera doesnt see it. Other cams can still see it becuase this info is never sent to the network
         _playerBody.layer = 8;
@@ -171,9 +204,85 @@ public partial class Player_Handler : MonoBehaviour
         // else return it to walk speed scale
         _moveSpeedScale = (Input.GetKey("left shift")) ? PlayerSpeeds.Sprint : PlayerSpeeds.Walk;
 
+        // Checks for jump
+        if (Input.GetKeyDown(KeyCode.Space)) Jump();
+
+        if(Input.GetKeyDown(KeyCode.LeftControl)) Crouch();
+
         // Using an else if to optimize slighty
         if (Input.GetKeyDown(KeyCode.R)) _primaryWeapon.AttemptReload();
         else if (Input.GetButton("Fire1")) FireWeapon();
+    }
+
+    /// <summary>
+    /// Called for physics calculations
+    /// </summary>
+    private void FixedUpdate()
+    {
+        // If the player is jumping, add force on the y axis then set jumping to false
+        if(_isJumping)
+        {
+            _rb.AddForce(0, jumpForceY, 0, ForceMode.Impulse);
+            _isJumping = false;
+        }
+    }
+
+    /// <summary>
+    /// Called when there is a collision
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Collision enter with the level layer
+        if (collision.gameObject.layer == 9)
+        {
+            _isGrounded = true;
+        }
+    }
+
+    /// <summary>
+    /// Called when a collision stops
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnCollisionExit(Collision collision)
+    {
+        // Collision exit with the level layer
+        if (collision.gameObject.layer == 9)
+        {
+            _isGrounded = false;
+        }
+    }
+
+    /// <summary>
+    /// Called to check the conditions of the player jumping
+    /// </summary>
+    protected void Jump()
+    {
+        if (!_isJumping && _isGrounded) _isJumping = true;
+    }
+
+    /// <summary>
+    /// Called to check the conditions of the player crouching
+    /// </summary>
+    protected void Crouch()
+    {
+        if (_isCrouching) _isCrouching = false;
+        else _isCrouching = true;
+
+        // TODO: Look into a better way of scaling the player down for crouching
+        // because detaching and reattaching the children isn't efficent
+        transform.DetachChildren();
+
+        Vector3 t = gameObject.transform.localScale;
+        if (_isCrouching) t.y = 0.5f;
+        else t.y = 1f;
+
+        gameObject.transform.localScale = t;
+
+        foreach (var u in children)
+        {
+            u.parent = gameObject.transform;
+        }
     }
 
     /// <summary>
