@@ -1,37 +1,161 @@
-Mono path[0] = 'E:/Computer Programming/Unity/Protect-The-Snackbar/Project/Build/Build_Data/Managed'
-Mono path[1] = 'E:/Computer Programming/Unity/Protect-The-Snackbar/Project/Build/Build_Data/Mono'
-Mono config path = 'E:/Computer Programming/Unity/Protect-The-Snackbar/Project/Build/Build_Data/Mono/etc'
-PlayerConnection initialized from E:/Computer Programming/Unity/Protect-The-Snackbar/Project/Build/Build_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55423
-Multi-casting "[IP] 192.168.0.18 [Port] 55423 [Flags] 2 [Guid] 4092843792 [EditorId] 3100360060 [Version] 1048832 [Id] WindowsPlayer(This-PC) [Debug] 0" to [225.0.0.222:54997]...
-Started listening to [0.0.0.0:55423]
-PlayerConnection already initialized - listening to [0.0.0.0:55423]
-Player data archive not found at `E:/Computer Programming/Unity/Protect-The-Snackbar/Project/Build/Build_Data/data.unity3d`, using local filesystemInitialize engine version: 5.6.0f3 (497a0f351392)
+Mono path[0] = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Managed'
+Mono path[1] = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Mono'
+Mono config path = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Mono/etc'
+PlayerConnection initialized from D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55136
+Multi-casting "[IP] 192.168.2.28 [Port] 55136 [Flags] 2 [Guid] 3366807308 [EditorId] 1367661350 [Version] 1048832 [Id] WindowsPlayer(This-Laptop) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55136]
+PlayerConnection already initialized - listening to [0.0.0.0:55136]
+Player data archive not found at `D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/data.unity3d`, using local filesystemInitialize engine version: 5.6.0f3 (497a0f351392)
 GfxDevice: creating device client; threaded=1
 Direct3D:
-    Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce GTX 970 (ID=0x13c2)
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 950M (ID=0x139a)
     Vendor:   NVIDIA
-    VRAM:     4059 MB
+    VRAM:     2019 MB
     Driver:   22.21.13.8233
 Begin MonoManager ReloadAssembly
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll (this message is harmless)
-Loading E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
-- Completed reload, in  0.014 seconds
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: E:\Computer Programming\Unity\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.dll (this message is harmless)
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
+- Completed reload, in  0.022 seconds
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.130271 ms
+Mono path[0] = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Managed'
+Mono path[1] = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Mono'
+Mono config path = 'D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/Mono/etc'
+PlayerConnection initialized from D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55338
+Multi-casting "[IP] 192.168.2.28 [Port] 55338 [Flags] 2 [Guid] 2435776311 [EditorId] 1367661350 [Version] 1048832 [Id] WindowsPlayer(This-Laptop) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55338]
+PlayerConnection already initialized - listening to [0.0.0.0:55338]
+Player data archive not found at `D:/Unity/Projects/Protect-The-Snackbar/Project/Build/Build_Data/data.unity3d`, using local filesystemInitialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 950M (ID=0x139a)
+    Vendor:   NVIDIA
+    VRAM:     2019 MB
+    Driver:   22.21.13.8233
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll (this message is harmless)
+Loading D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\Photon3Unity3D.dll into Unity Child Domain
+- Completed reload, in  0.023 seconds
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Unity\Projects\Protect-The-Snackbar\Project\Build\Build_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 3864 -> priority: 1 
+  Thread -> id: 19bc -> priority: 1 
+  Thread -> id: 1638 -> priority: 1 
+  Thread -> id: e30 -> priority: 1 
+<RI> Initialized touch support.
+UnloadTime: 2.904097 ms
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 938 -> priority: 1 
+  Thread -> id: 12e0 -> priority: 1 
+  Thread -> id: 4594 -> priority: 1 
+  Thread -> id: 17e0 -> priority: 1 
+Entered spawn loop | Warmup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<SpawnLoop>c__Iterator0:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:145)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+WaveManager:FixedUpdate() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:78)
+ 
+(Filename: D:/Unity/Projects/Protect-The-Snackbar/Project/Assets/Scripts/WaveManager/WaveManager.cs Line: 145)
+
+Warm Up | Warmup
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<WarmpUp>c__Iterator1:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:164)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+<SpawnLoop>c__Iterator0:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:149)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: D:/Unity/Projects/Protect-The-Snackbar/Project/Assets/Scripts/WaveManager/WaveManager.cs Line: 164)
+
+Round Play | Play
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<RoundPlay>c__Iterator3:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:186)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+<SpawnLoop>c__Iterator0:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:151)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: D:/Unity/Projects/Protect-The-Snackbar/Project/Assets/Scripts/WaveManager/WaveManager.cs Line: 186)
+
+Entered spawn loop | Play
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<SpawnLoop>c__Iterator0:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:145)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+WaveManager:FixedUpdate() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:78)
+ 
+(Filename: D:/Unity/Projects/Protect-The-Snackbar/Project/Assets/Scripts/WaveManager/WaveManager.cs Line: 145)
+
+Round Play | Play
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<RoundPlay>c__Iterator3:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:186)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto_Internal(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\MonoBehaviourBindings.gen.cs:62)
+<SpawnLoop>c__Iterator0:MoveNext() (at D:\Unity\Projects\Protect-The-Snackbar\Project\Assets\Scripts\WaveManager\WaveManager.cs:151)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr) (at C:\buildslave\unity\build\Runtime\Export\Coroutines.cs:17)
+ 
+(Filename: D:/Unity/Projects/Protect-The-Snackbar/Project/Assets/Scripts/WaveManager/WaveManager.cs Line: 186)
+

@@ -72,7 +72,7 @@ public partial class Player_Handler : MonoBehaviour
     /// <summary>
     /// How much force will applied in the y direction when the player jumps
     /// </summary>
-    private const float jumpForceY = 4f;
+    [SerializeField] private float jumpForceY = 5f;
 
     private Transform[] children;
 
