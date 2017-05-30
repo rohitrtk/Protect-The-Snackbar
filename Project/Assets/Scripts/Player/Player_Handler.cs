@@ -74,7 +74,20 @@ public partial class Player_Handler : MonoBehaviour
     /// </summary>
     [SerializeField] private float jumpForceY = 5f;
 
+    /// <summary>
+    /// Children of this player
+    /// </summary>
     private Transform[] children;
+
+    /// <summary>
+    /// Players health component
+    /// </summary>
+    private Player_Health _playerHealth;
+
+    /// <summary>
+    /// Is this player dead?
+    /// </summary>
+    private bool _isDead;
 
     /// <summary>
     /// Use this for initialization
@@ -84,9 +97,14 @@ public partial class Player_Handler : MonoBehaviour
         // Players rigidbody component
         _rb = GetComponent<Rigidbody>();
 
+        // TODO: Make some sort of manager for the players UI components to make it more managable
+        // Gets the player health component from the player
+        _playerHealth = GameObject.Find("Health").GetComponent<Player_Health>();
+
         // Default player is not paused and is not jumping
         _paused = false;
         _isJumping = false;
+        _isDead = false;
 
         // Gets the weapon abstract class from the weapon inventory class attached to the player
         foreach(Weapon_Abstract wep in _playerWeapons.WeaponsInHand)
@@ -238,6 +256,12 @@ public partial class Player_Handler : MonoBehaviour
         {
             _isGrounded = true;
         }
+
+        // Temporary test
+        if(collision.gameObject.tag == "Enemy")
+        {
+            TakeDamage(10);
+        }
     }
 
     /// <summary>
@@ -291,6 +315,19 @@ public partial class Player_Handler : MonoBehaviour
     protected void FireWeapon()
     {
         _primaryWeapon.AttemptToFire();
+    }
+
+    /// <summary>
+    /// Called to take damage
+    /// </summary>
+    /// <param name="damageTaken"></param>
+    public void TakeDamage(float damageTaken)
+    {
+        // Initial damage deduction
+        _playerHealth.TakeDamage(damageTaken);
+
+        // Check if the player is dead
+        _isDead = _playerHealth.CheckDead();
     }
 }
 
