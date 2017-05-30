@@ -60,11 +60,6 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         _waveText.text = "Wave " + _wave;
 
         _currentPhase = Phase.Warmup;
-
-        if (PhotonNetwork.isMasterClient)
-        {
-            StartCoroutine(SpawnLoop());
-        }
     }
 	
 	// LateUpdate is called after Update
@@ -125,17 +120,6 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         return PhotonNetwork.Instantiate(prefabName, spawn.position, spawn.rotation, 0).GetComponent<Enemy_Abstract>();
     }
 
-    /*
-    -------------------------
-    | TODO: Connor's notes: |
-    -------------------------
-
-     -Maybe use a PUNRPC to tell everyone to increment the round
-     -Add a cooldown between rounds for the user to chill out
-     -
-     -
-    */
-
     /// <summary>
     /// Is the primary loop in which waves/rounds are handled
     /// </summary>
@@ -146,7 +130,7 @@ public class WaveManager : MonoBehaviour    //Maybe have a master controller tha
         yield return new WaitForSeconds(0.5f);
 
         if(_currentPhase == Phase.Pause)        yield return StartCoroutine(RoundPause());
-        else if(_currentPhase == Phase.Warmup)  yield return StartCoroutine(WarmpUp());
+        else if(_currentPhase == Phase.Warmup)  yield return StartCoroutine(WarmpUp()); 
 
         yield return StartCoroutine(RoundPlay());
         yield return StartCoroutine(RoundWait());
@@ -270,6 +254,7 @@ public struct Wave
     /// <returns></returns>
     public static bool CheckEnemies(Enemy_Abstract[] enemies)
     {
+        // Foreach Enemy_Abstract in enemies
         foreach(var e in enemies)
         {
             if (e != null) return false;
